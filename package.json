@@ -1,0 +1,37 @@
+{
+  "name": "bc-asset-management",
+  "version": "1.1.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "nodemon --watch src -e ts,ejs --exec npm run dev:start",
+    "dev": "node .",
+    "dev:start": "npm-run-all build dev",
+    "build": "npm-run-all clean lint tsc copy-assets",
+    "copy-assets": "ts-node tools/copyAssets",
+    "tsc": "tsc",
+    "clean": "rimraf dist/*",
+    "lint": "tslint -c tslint.json -p tsconfig.json"
+  },
+  "author": "Bilas Siddiq",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.3",
+    "nodemon": "^2.0.15",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^3.0.2",
+    "shelljs": "^0.8.5",
+    "ts-node": "^10.7.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.2",
+    "@types/node": "^13.7.0",
+    "@types/nodemon": "^1.19.1",
+    "@types/rimraf": "^3.0.2",
+    "@types/shelljs": "^0.8.11",
+    "tslint": "^6.0.0",
+    "typescript": "^3.7.5"
+  }
+}
