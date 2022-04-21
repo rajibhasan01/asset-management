@@ -1,2 +1,7 @@
 /node_modules
 package-lock.json
+build
+npm-debug.log
+.env
+.DS_Store
+public/assets/images

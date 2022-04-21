@@ -1,0 +1,106 @@
+<html>
+  <head>
+    <%- include('../partials/head.ejs') %>
+  </head>
+  <body>
+    <!-- Loader starts-->
+    <%- include('../partials/loader.ejs') %>
+    <!-- Loader ends-->
+    <!-- tap on top starts-->
+    <div class="tap-top"><i data-feather="chevrons-up"></i></div>
+    <!-- tap on tap ends-->
+    <!-- page-wrapper Start-->
+    <div class="page-wrapper compact-wrapper" id="pageWrapper">
+      <!-- Page Header Start-->
+      <%- include('../partials/pageHeader.ejs') %>
+      <!-- Page Header Ends                              -->
+      <!-- Page Body Start-->
+      <div class="page-body-wrapper">
+        <!-- Page Sidebar Start-->
+        <%- include('../partials/sideNav.ejs') %>
+        <!-- Page Sidebar Ends-->
+        <div class="page-body">
+          <div class="container-fluid">
+            <div class="page-title">
+              <div class="row">
+                <div class="col-12 col-sm-6">
+                  <h3>Add Asset Type</h3>
+                </div>
+                <div class="col-12 col-sm-6">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                      <a href="index.html"> <i data-feather="home"></i></a>
+                    </li>
+                    <li class="breadcrumb-item">Asset Type</li>
+                    <li class="breadcrumb-item active">Add Type</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid starts-->
+          <div class="container-fluid">
+            <div class="edit-profile">
+              <div class="row">
+                <div class="col-xl-6">
+                  <form class="card">
+                    <div class="card-header pb-0">
+                      <h4 class="card-title mb-0">Add Asset Type</h4>
+                      <div class="card-options">
+                        <a
+                          class="card-options-collapse"
+                          href="#"
+                          data-bs-toggle="card-collapse"
+                          ><i class="fe fe-chevron-up"></i></a
+                        ><a
+                          class="card-options-remove"
+                          href="#"
+                          data-bs-toggle="card-remove"
+                          ><i class="fe fe-x"></i
+                        ></a>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input
+                              class="form-control"
+                              type="text"
+                              placeholder="name"
+                              name="name"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12">
+                          <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea
+                              class="form-control"
+                              rows="5"
+                              placeholder="Enter description"
+                            ></textarea>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-footer text-end">
+                      <button class="btn btn-primary" type="submit">
+                        Add Type
+                      </button>
+                    </div>
+                  </form>
+                  <!-- Container-fluid Ends-->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- footer start-->
+        <%- include('../partials/footer.ejs') %>
+      </div>
+    </div>
+    <%- include('../partials/jsLibrary.ejs') %>
+  </body>
+</html>
