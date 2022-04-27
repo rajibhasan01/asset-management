@@ -43,4 +43,24 @@ export class DbAssetType {
       }
     });
   }
+  /**
+   * GetAssetTypeList
+   */
+  public GetAssetTypeList() {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const dbConn = await this.getDbConnection();
+        const db = dbConn.db(config.mongo.dbName);
+        const dbCollection = db.collection(this.collectionName);
+        const result = await dbCollection.find().sort({ name: -1 }).toArray();
+        if (result) {
+          resolve(result);
+        } else {
+          reject('error getting the asset type');
+        }
+      } catch (error) {
+        console.log('error getting the asset type');
+      }
+    });
+  }
 }

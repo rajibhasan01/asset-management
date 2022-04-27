@@ -3,7 +3,7 @@ export class Product {
   brand?: string;
   invoiceNumber?: string;
   description?: string;
-  quantity?: string;
+  quantity?: number;
 
   private static product: Product;
   private constructor() {}

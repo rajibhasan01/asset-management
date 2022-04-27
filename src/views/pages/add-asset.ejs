@@ -45,6 +45,20 @@
                 <div class="col-xl-6">
                   <form class="card" method="post" action="/add-asset">
                     <div class="card-header pb-0">
+                      <% if(typeof message !== 'undefined'){ %>
+                      <div
+                        class="alert alert-warning alert-dismissible fade show"
+                        role="alert"
+                      >
+                        <strong><%= message %> </strong>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="alert"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <% } %>
                       <h4 class="card-title mb-0">Add Asset</h4>
                       <div class="card-options">
                         <a
@@ -65,12 +79,17 @@
                         <div class="col-md-12">
                           <div class="mb-3">
                             <label class="form-label">Asset Type</label>
-                            <select class="form-control btn-square" name="assetType">
+                            <select
+                              class="form-control btn-square"
+                              name="assetType"
+                            >
                               <option value="0">--Select--</option>
-                              <option value="1">Hardware</option>
-                              <option value="2">Stationary</option>
-                              <option value="3">Software</option>
-                              <option value="4">Device</option>
+                              <% if(typeof assetType !== 'undefined'){
+                              assetType.map((data) => { %>
+                              <option value="<%= data._id %>">
+                                <%= data.name %>
+                              </option>
+                              <% }) } %>
                             </select>
                           </div>
                         </div>

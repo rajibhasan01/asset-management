@@ -29,7 +29,7 @@ export class DbAsset {
     return new Promise(async (resolve, reject) => {
       try {
         const dbConn = await this.getDbConnection();
-        const db = dbConn.db(config.mongo.url);
+        const db = dbConn.db(config.mongo.dbName);
         const dbCollection = db.collection(this.collectionName);
         const result = await dbCollection.insertOne(assetData);
         await dbConn.close();
@@ -40,6 +40,26 @@ export class DbAsset {
         }
       } catch (error) {
         console.log('Error in CreateAsset method of DbAsset: ', error);
+      }
+    });
+  }
+  /**
+   * GetAssetTypeList
+   */
+  public GetAssetList() {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const dbConn = await this.getDbConnection();
+        const db = dbConn.db(config.mongo.dbName);
+        const dbCollection = db.collection(this.collectionName);
+        const result = await dbCollection.find().sort({ name: -1 }).toArray();
+        if (result) {
+          resolve(result);
+        } else {
+          reject('error getting the asset type');
+        }
+      } catch (error) {
+        console.log('error getting the asset type');
       }
     });
   }

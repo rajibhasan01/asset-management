@@ -3,8 +3,8 @@ import { MongoClient } from 'mongodb';
 import { ConfigService } from './../utility/configService';
 const config = ConfigService.getInstance().getConfig();
 export class DbProduct {
-  private collectionName:string;
-  private static dbProduct:DbProduct;
+  private collectionName: string;
+  private static dbProduct: DbProduct;
   private constructor() {
     this.collectionName = 'product';
   }
@@ -29,7 +29,7 @@ export class DbProduct {
     return new Promise(async (resolve, reject) => {
       try {
         const dbConn = await this.getDbConnection();
-        const db = dbConn.db(config.mongo.url);
+        const db = dbConn.db(config.mongo.dbName);
         const dbCollection = db.collection(this.collectionName);
         const result = await dbCollection.insertOne(productData);
         await dbConn.close();
@@ -40,6 +40,26 @@ export class DbProduct {
         }
       } catch (error) {
         console.log('Error in CreateProduct method of DbProduct: ', error);
+      }
+    });
+  }
+  /**
+   * GetProductList
+   */
+  public GetProductList() {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const dbConn = await this.getDbConnection();
+        const db = dbConn.db(config.mongo.dbName);
+        const dbCollection = db.collection(this.collectionName);
+        const result = await dbCollection.find().sort({ brand: -1 }).toArray();
+        if (result) {
+          resolve(result);
+        } else {
+          reject('error getting the asset type');
+        }
+      } catch (error) {
+        console.log('error getting the asset type');
       }
     });
   }

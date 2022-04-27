@@ -5,6 +5,7 @@ const dbProduct = DbProduct.getInstance();
 export class ProductService implements ProductInterface {
   private static productService: ProductService;
   private constructor() {}
+
   public AddProduct(productData: Product) {
     return new Promise(async (resolve, reject) => {
       try {
@@ -30,5 +31,15 @@ export class ProductService implements ProductInterface {
       ProductService.productService = new ProductService();
     }
     return ProductService.productService;
+  }
+  public GetProductList() {
+    return new Promise(async (resolve, reject) => {
+      await dbProduct
+        .GetProductList()
+        .then((result) => {
+          resolve(result);
+        })
+        .catch((err) => reject(err));
+    });
   }
 }

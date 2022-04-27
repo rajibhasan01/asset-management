@@ -5,6 +5,7 @@ const dbAsset = DbAsset.getInstance();
 export class AssetService implements AssetInterface {
   private static assetService: AssetService;
   private constructor() {}
+
   public AddAsset(assetData: Asset) {
     return new Promise(async (resolve, reject) => {
       try {
@@ -30,5 +31,15 @@ export class AssetService implements AssetInterface {
       AssetService.assetService = new AssetService();
     }
     return AssetService.assetService;
+  }
+  public GetAssetList() {
+    return new Promise(async (resolve, reject) => {
+      await dbAsset
+        .GetAssetList()
+        .then((result) => {
+          resolve(result);
+        })
+        .catch((err) => reject(err));
+    });
   }
 }

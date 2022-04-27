@@ -5,6 +5,7 @@ const dbAssetType = DbAssetType.getInstance();
 export class AssetTypeService implements AssetTypeInterFace {
   public static assetTypeService: AssetTypeService;
   private constructor() {}
+
   /**
    * static getInstance
    */
@@ -32,5 +33,15 @@ export class AssetTypeService implements AssetTypeInterFace {
   }
   public EditAssetType(assetType: AssetType) {
     throw new Error('Method not implemented.');
+  }
+  public GetAssetTypeList() {
+    return new Promise(async (resolve, reject) => {
+      await dbAssetType
+        .GetAssetTypeList()
+        .then((result) => {
+          resolve(result);
+        })
+        .catch((err) => reject(err));
+    });
   }
 }
