@@ -42,4 +42,25 @@ export class ProductService implements ProductInterface {
         .catch((err) => reject(err));
     });
   }
+
+  public GetProductById(productId: string) {
+    return new Promise(async (resolve, reject) => {
+      await dbProduct
+        .GetProductById(productId)
+        .then((result) => {
+          resolve(result);
+        })
+        .catch((err) => reject(err));
+    });
+  }
+  public EditProductById(productId: string, productData: Product) {
+    return new Promise(async (resolve, reject) => {
+      await dbProduct
+        .EditProductById(productId, productData)
+        .then((result) => {
+          resolve(result);
+        })
+        .catch((err) => reject(err));
+    });
+  }
 }

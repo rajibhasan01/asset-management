@@ -67,6 +67,7 @@
                           <tr>
                             <th>Name</th>
                             <th>Description</th>
+                            <th>Edit</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -75,6 +76,7 @@
                           <tr>
                             <td><%=data.name%></td>
                             <td><%=data.description%></td>
+                            <td><a href="/edit-asset/<%=data._id%>">Edit</a></td>
                           </tr>
                           <% }) } %>
                         </tbody>
@@ -82,6 +84,7 @@
                           <tr>
                             <th>Name</th>
                             <th>Description</th>
+                            <th>Edit</th>
                           </tr>
                         </tfoot>
                       </table>

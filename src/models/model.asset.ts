@@ -1,7 +1,7 @@
 export class Asset {
   name?: string;
   description?: string;
-  assetTypeId?: string;
+  assetType?: string;
   private static asset: Asset;
   private constructor() {}
   /**

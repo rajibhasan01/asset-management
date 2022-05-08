@@ -1,4 +1,4 @@
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import { ConfigService } from './../utility/configService';
 import { AssetType } from './../../models/model.asset-type';
 
@@ -43,6 +43,35 @@ export class DbAssetType {
       }
     });
   }
+  public async EditAssetTypeById(assetTypeId: string, assetType: AssetType) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const dbConn = await this.getDbConnection();
+        const db = dbConn.db(config.mongo.dbName);
+        const dbCollection = db.collection(this.collectionName);
+        const result = await dbCollection.updateOne(
+          { _id: new ObjectId(assetTypeId) },
+          {
+            $set: {
+              name: assetType.name,
+              description: assetType.description,
+            },
+          }
+        );
+        await dbConn.close();
+        if (result) {
+          resolve('success');
+        } else {
+          reject('failed');
+        }
+      } catch (error) {
+        console.log(
+          'Error in EditAssetTypeById method of DbAssetType: ',
+          error
+        );
+      }
+    });
+  }
   /**
    * GetAssetTypeList
    */
@@ -60,6 +89,32 @@ export class DbAssetType {
         }
       } catch (error) {
         console.log('error getting the asset type');
+      }
+    });
+  }
+  /**
+   * GetAssetTypeById
+   */
+  public GetAssetTypeById(assetTypeId: string) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        if (ObjectId.isValid(assetTypeId)) {
+          const dbConn = await this.getDbConnection();
+          const db = dbConn.db(config.mongo.dbName);
+          const dbCollection = db.collection(this.collectionName);
+          const assetTypeResult = await dbCollection.findOne({
+            _id: new ObjectId(assetTypeId),
+          });
+          if (assetTypeResult) {
+            resolve(assetTypeResult);
+          } else {
+            reject('error getting the asset type');
+          }
+        } else {
+          reject('Id is not Valid');
+        }
+      } catch (error) {
+        reject('Id is not Valid');
       }
     });
   }

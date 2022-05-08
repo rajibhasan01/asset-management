@@ -16,6 +16,11 @@ adminDashboardRouter.get('/', (req, res, next) => {
 adminDashboardRouter.get('/add-asset-type', (req, res, next) => {
   res.render('pages/add-asset-type.ejs');
 });
+adminDashboardRouter.get('/edit-asset-type/:id', async (req, res, next) => {
+  const assetTypeId = req.params.id;
+  const assetTypeResult = await assetTypeService.GetAssetTypeById(assetTypeId);
+  res.render('pages/edit-asset-type.ejs', { assetTypeResult });
+});
 adminDashboardRouter.post('/add-asset-type', async (req, res, next) => {
   try {
     const result = await assetTypeService.AddAssetType(req.body);
@@ -25,13 +30,37 @@ adminDashboardRouter.post('/add-asset-type', async (req, res, next) => {
         message: result,
         assetData: assetType,
       });
-      console.log(result);
     } else {
       res.render('pages/add-asset-type.ejs', { message: result });
-      console.log(result);
     }
   } catch (error) {
     console.log('Error in add asset type post route:', error);
+  }
+});
+adminDashboardRouter.post('/edit-asset-type/:id', async (req, res, next) => {
+  try {
+    const assetTypeId = req.params.id;
+    const assetTypeResult = await assetTypeService.EditAssetTypeById(
+      assetTypeId,
+      req.body
+    );
+    const assetTypeListResult = await assetTypeService.GetAssetTypeList();
+    if (assetTypeResult && assetTypeListResult) {
+      if (assetTypeResult === 'success') {
+        res.render('pages/asset-type-list.ejs', {
+          message: 'Successfully Edited',
+          assetData: assetTypeListResult,
+        });
+      } else {
+        res.render('pages/edit-asset-type.ejs', {
+          message: 'Please Try Again.',
+        });
+      }
+    } else {
+      res.render('pages/edit-asset-type.ejs', { message: 'Please Try Again.' });
+    }
+  } catch (error) {
+    console.log('Error in edit asset type post route:', error);
   }
 });
 adminDashboardRouter.get('/asset-type-list', async (req, res, next) => {
@@ -39,9 +68,8 @@ adminDashboardRouter.get('/asset-type-list', async (req, res, next) => {
   if (result) {
     res.render('pages/asset-type-list.ejs', { assetData: result });
   } else {
-    res.render('pages/add-asset-type.ejs', { assetData: result });
+    res.render('pages/add-asset-type.ejs');
   }
-  // res.render('pages/asset-type-list.ejs');
 });
 
 // Asset route
@@ -69,10 +97,48 @@ adminDashboardRouter.post('/add-asset', async (req, res, next) => {
     console.log('Error in add asset post route:', error);
   }
 });
-adminDashboardRouter.get('/asset-list', (req, res, next) => {
-  res.render('pages/asset-list.ejs');
+adminDashboardRouter.get('/asset-list', async (req, res, next) => {
+  try {
+    const assets = await assetService.GetAssetList();
+    if (assets) {
+      res.render('pages/asset-list.ejs', { assets });
+    } else {
+      res.render('pages/asset-list.ejs');
+    }
+  } catch (error) {
+    console.log('Error in getting asset list: ', error);
+  }
 });
 
+adminDashboardRouter.get('/edit-asset/:id', async (req, res, next) => {
+  const assetId = req.params.id;
+  const assetResult = await assetService.GetAssetById(assetId);
+  const assetType = await assetTypeService.GetAssetTypeList();
+  res.render('pages/edit-asset.ejs', { assetResult, assetType });
+});
+adminDashboardRouter.post('/edit-asset/:id', async (req, res, next) => {
+  try {
+    const assetId = req.params.id;
+    const assetResult = await assetService.EditAssetById(assetId, req.body);
+    const assetListResult = await assetService.GetAssetList();
+    if (assetResult) {
+      if (assetResult === 'success') {
+        res.render('pages/asset-list.ejs', {
+          message: 'Successfully Edited',
+          assetData: assetListResult,
+        });
+      } else {
+        res.render('pages/edit-asset.ejs', {
+          message: 'Please Try Again.',
+        });
+      }
+    } else {
+      res.render('pages/edit-asset.ejs', { message: 'Please Try Again.' });
+    }
+  } catch (error) {
+    console.log('Error in edit asset type post route:', error);
+  }
+});
 // Product route
 adminDashboardRouter.get('/add-product', async (req, res, next) => {
   const assets = await assetService.GetAssetList();
@@ -102,6 +168,21 @@ adminDashboardRouter.get('/product-list', async (req, res, next) => {
   } else {
     res.render('pages/product-list.ejs');
   }
+});
+
+adminDashboardRouter.get('/edit-product/:id', async (req, res, next) => {
+  const productId = req.params.id;
+  const assetType = await assetService.GetAssetList();
+  console.log(
+    '🚀 ~ file: route.admin.dashboard.ts ~ line 176 ~ adminDashboardRouter.get ~ assetType',
+    assetType
+  );
+  const productResult = await productService.GetProductById(productId);
+  console.log(
+    '🚀 ~ file: route.admin.dashboard.ts ~ line 178 ~ adminDashboardRouter.get ~ productResult',
+    productResult
+  );
+  res.render('pages/edit-product.ejs', { productResult, assetType });
 });
 
 export = adminDashboardRouter;

@@ -44,4 +44,24 @@ export class AssetTypeService implements AssetTypeInterFace {
         .catch((err) => reject(err));
     });
   }
+  public GetAssetTypeById(assetTypeId: string) {
+    return new Promise(async (resolve, reject) => {
+      await dbAssetType
+        .GetAssetTypeById(assetTypeId)
+        .then((result) => {
+          resolve(result);
+        })
+        .catch((err) => reject(err));
+    });
+  }
+  public EditAssetTypeById(assetTypeId: string, assetType: AssetType) {
+    return new Promise(async (resolve, reject) => {
+      await dbAssetType
+        .EditAssetTypeById(assetTypeId, assetType)
+        .then((result) => {
+          resolve(result);
+        })
+        .catch((err) => reject(err));
+    });
+  }
 }

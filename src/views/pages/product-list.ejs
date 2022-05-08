@@ -70,6 +70,7 @@
                             <th>Quantity</th>
                             <th>InvoiceId</th>
                             <th>Description</th>
+                            <th>Edit</th>
                           </tr>
                           </thead>
                           <tbody>
@@ -80,6 +81,7 @@
                               <td><%=data.quantity%></td>
                               <td><%=data.invoiceNumber%></td>
                               <td><%=data.description%></td>
+                              <td><a href="/edit-product/<%=data._id%>">Edit</a></td>
                             </tr>
                             <% }) } %>
                         </tbody>
@@ -88,6 +90,7 @@
                             <th>Quantity</th>
                             <th>InvoiceId</th>
                             <th>Description</th>
+                            <th>Edit</th>
 
                           </tr>
                         </tfoot>
