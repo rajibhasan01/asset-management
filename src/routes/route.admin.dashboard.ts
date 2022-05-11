@@ -3,6 +3,7 @@ import { AssetService } from './../services/asset/service.asset';
 import { AssetTypeService } from './../services/asset-type/service.asset-type';
 
 import express from 'express';
+import invoiceRoute from './invoice/route.invoice';
 const adminDashboardRouter = express.Router();
 const assetTypeService = AssetTypeService.getInstance();
 const assetService = AssetService.getInstance();
@@ -173,16 +174,35 @@ adminDashboardRouter.get('/product-list', async (req, res, next) => {
 adminDashboardRouter.get('/edit-product/:id', async (req, res, next) => {
   const productId = req.params.id;
   const assetType = await assetService.GetAssetList();
-  console.log(
-    '🚀 ~ file: route.admin.dashboard.ts ~ line 176 ~ adminDashboardRouter.get ~ assetType',
-    assetType
-  );
   const productResult = await productService.GetProductById(productId);
-  console.log(
-    '🚀 ~ file: route.admin.dashboard.ts ~ line 178 ~ adminDashboardRouter.get ~ productResult',
-    productResult
-  );
   res.render('pages/edit-product.ejs', { productResult, assetType });
 });
+adminDashboardRouter.post('/edit-product/:id', async (req, res, next) => {
+  try {
+    const productId = req.params.id;
+    const productResult = await productService.EditProductById(
+      productId,
+      req.body
+    );
+    const productsResult = await productService.GetProductList();
+    if (productResult) {
+      if (productResult === 'success') {
+        res.render('pages/product-list.ejs', {
+          message: 'Successfully Edited',
+          products: productsResult,
+        });
+      } else {
+        res.render('pages/edit-product.ejs', {
+          message: 'Please Try Again.',
+        });
+      }
+    } else {
+      res.render('pages/edit-asset.ejs', { message: 'Please Try Again.' });
+    }
+  } catch (error) {
+    console.log('Error in edit asset type post route:', error);
+  }
+});
 
+adminDashboardRouter.use('/invoice', invoiceRoute);
 export = adminDashboardRouter;

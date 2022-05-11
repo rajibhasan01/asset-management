@@ -1,0 +1,114 @@
+<html>
+  <head>
+    <%- include('../partials/head.ejs') %>
+  </head>
+  <body>
+    <!-- Loader starts-->
+    <%- include('../partials/loader.ejs') %>
+    <!-- Loader ends-->
+    <!-- tap on top starts-->
+    <div class="tap-top"><i data-feather="chevrons-up"></i></div>
+    <!-- tap on tap ends-->
+    <!-- page-wrapper Start-->
+    <div class="page-wrapper compact-wrapper" id="pageWrapper">
+      <!-- Page Header Start-->
+      <%- include('../partials/pageHeader.ejs') %>
+      <!-- Page Header Ends                              -->
+      <!-- Page Body Start-->
+      <div class="page-body-wrapper">
+        <!-- Page Sidebar Start-->
+        <%- include('../partials/sideNav.ejs') %>
+        <!-- Page Sidebar Ends-->
+        <div class="page-body">
+          <div class="container-fluid">
+            <div class="page-title">
+              <div class="row">
+                <div class="col-12 col-sm-6">
+                  <h3>Asset List</h3>
+                </div>
+                <div class="col-12 col-sm-6">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                      <a href="index.html"> <i data-feather="home"></i></a>
+                    </li>
+                    <li class="breadcrumb-item">Asset</li>
+                    <li class="breadcrumb-item active">Asset List</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid starts-->
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="card">
+                  <div class="card-header pb-0">
+                    <% if(typeof message !== 'undefined'){ %>
+                    <div
+                      class="alert alert-success alert-dismissible fade show"
+                      role="alert"
+                    >
+                      <strong><%= message %></strong>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <% } %>
+                    <h5 class="mb-3">Asset List</h5>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="display" id="advance-1">
+                        <thead>
+                          <tr>
+                            <th>Title</th>
+                            <th>Amount</th>
+                            <th>CashType</th>
+                            <th>Image</th>
+                            <th>Edit</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% if(typeof invoiceData !== 'undefined'){
+                          invoiceData.map((data) => { %>
+                          <tr>
+                            <td><%=data.title%></td>
+                            <td><%=data.amount%></td>
+                            <td><%=data.cashType%></td>
+                            <td><a href="<%=data.imagePath%>" target="_blank"><img style="max-width: 200px;" class="img-thumbnail" src="<%=data.imagePath%>" alt="<%=data.imageName%>"></a></td>
+                            <td><a href="/invoice/edit/<%=data._id%>">Edit</a></td>
+                          </tr>
+                          <% }) } %>
+                        </tbody>
+                        <tfoot>
+                          <tr>
+                            <th>Title</th>
+                            <th>Amount</th>
+                            <th>CashType</th>
+                            <th>Image</th>
+                            <th>Edit</th>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- DOM / jQuery  Ends-->
+
+              <!-- Column rendering Ends-->
+            </div>
+          </div>
+          <!-- Container-fluid Ends-->
+        </div>
+        <!-- footer start-->
+        <%- include('../partials/footer.ejs') %>
+      </div>
+    </div>
+    <%- include('../partials/jsLibrary.ejs') %>
+  </body>
+</html>

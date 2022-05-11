@@ -24,15 +24,29 @@
             <div class="page-title">
               <div class="row">
                 <div class="col-12 col-sm-6">
-                  <h3>Add Product</h3>
+                  <% if(typeof message !== 'undefined'){ %>
+                    <div
+                      class="alert alert-warning alert-dismissible fade show"
+                      role="alert"
+                    >
+                      <strong><%= message %> </strong>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <% } %>
+                  <h3>Add Invoice</h3>
                 </div>
                 <div class="col-12 col-sm-6">
                   <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                       <a href="index.html"> <i data-feather="home"></i></a>
                     </li>
-                    <li class="breadcrumb-item">Product</li>
-                    <li class="breadcrumb-item active">Edit Product</li>
+                    <li class="breadcrumb-item">Invoice</li>
+                    <li class="breadcrumb-item active">Add Invoice</li>
                   </ol>
                 </div>
               </div>
@@ -43,23 +57,9 @@
             <div class="edit-profile">
               <div class="row">
                 <div class="col-xl-6">
-                  <form class="card" method="post" action="/edit-product/<%= productResult._id %>">
+                  <form class="card" method="post" action="/invoice/create" enctype="multipart/form-data">
                     <div class="card-header pb-0">
-                      <% if(typeof message !== 'undefined'){ %>
-                      <div
-                        class="alert alert-warning alert-dismissible fade show"
-                        role="alert"
-                      >
-                        <strong><%= message %> </strong>
-                        <button
-                          type="button"
-                          class="btn-close"
-                          data-bs-dismiss="alert"
-                          aria-label="Close"
-                        ></button>
-                      </div>
-                      <% } %>
-                      <h4 class="card-title mb-0">Edit Product</h4>
+                      <h4 class="card-title mb-0">Add Invoice</h4>
                       <div class="card-options">
                         <a
                           class="card-options-collapse"
@@ -78,79 +78,54 @@
                       <div class="row">
                         <div class="col-md-12">
                           <div class="mb-3">
-                            <label class="form-label">Asset Name</label>
+                            <label class="form-label">Invoice Title</label>
+                            <input
+                              class="form-control"
+                              type="text"
+                              placeholder="title"
+                              name="title"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="mb-3">
+                            <label class="form-label">Amount</label>
+                            <input
+                              class="form-control"
+                              type="text"
+                              placeholder="amount"
+                              name="amount"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="mb-3">
+                            <label class="form-label">Amount</label>
                             <select
                               class="form-control btn-square"
-                              name="assetId"
+                              name="cashType"
                             >
-                              <option value="0">--Select--</option>
-                              <% if(typeof assetType !== 'undefined'){
-                              assetType.map((data) => { 
-                                let id = ''+data._id;
-                                  let selected = '';
-                                  if (id === productResult.assetId) {
-                                    selected = 'selected';
-                                  }
-                                %>
-                              <option value="<%= data._id %>" <%= selected %> >
-                                <%= data.name %>
-                              </option>
-                              <% }) } %>
-                            </select>
-                          </div>
-                        </div>
-                        <div class="col-md-12">
-                          <div class="mb-3">
-                            <label class="form-label">Brand</label>
-                            <input
-                              class="form-control"
-                              type="text"
-                              placeholder="Brand"
-                              name="brand"
-                              value="<%= productResult.brand %>"
-                            />
-                          </div>
-                        </div>
-                        <div class="col-md-12">
-                          <div class="mb-3">
-                            <label class="form-label">Invoice Number</label>
-                            <input
-                              class="form-control"
-                              type="text"
-                              placeholder="Invoice number"
-                              name="invoiceNumber"
-                              value="<%= productResult.invoiceNumber %>"
-                            />
-                          </div>
-                        </div>
-                        <div class="col-md-12">
-                          <div class="mb-3">
-                            <label class="form-label">Quantity</label>
-                            <input
-                              class="form-control"
-                              type="number"
-                              placeholder="Quantity"
-                              name="quantity"
-                              value="<%= productResult.quantity %>"
-                            />
+                            <option value="0">--Select--</option>
+                            <option value="Cash in">Cash In</option>
+                            <option value="Cash out">Cash Out</option>
+                          </select>
                           </div>
                         </div>
                         <div class="col-sm-12 col-md-12">
                           <div class="mb-3">
-                            <label class="form-label">Description</label>
-                            <textarea
+                            <label class="form-label">Invoice Image</label>
+                            <input
                               class="form-control"
-                              rows="5"
-                              placeholder="Enter description"
-                              name="description"
-                            ><%= productResult.description %></textarea>
+                              type="file"
+                              name="imageName"
+                            />
                           </div>
                         </div>
                       </div>
                     </div>
                     <div class="card-footer text-end">
                       <button class="btn btn-primary" type="submit">
-                        Add Type
+                        Add Invoice
                       </button>
                     </div>
                   </form>
