@@ -1,6 +1,10 @@
 import { ProductService } from './../services/product/service.product';
 import { AssetService } from './../services/asset/service.asset';
 import { AssetTypeService } from './../services/asset-type/service.asset-type';
+import { ConfigService } from "../services/utility/configService";
+
+
+const config = ConfigService.getInstance().getConfig();
 
 import express from 'express';
 import invoiceRoute from './invoice/route.invoice';
@@ -12,6 +16,7 @@ const productService = ProductService.getInstance();
 adminDashboardRouter.get('/', (req, res, next) => {
   res.render('pages/index.ejs');
 });
+
 
 // Asset type route
 adminDashboardRouter.get('/add-asset-type', (req, res, next) => {
