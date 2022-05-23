@@ -28,8 +28,6 @@ const checkNotAuthenticated = (req:any, res:any, next:any) => {
   next()
 }
 
-
-
 loginRoute.get("/", checkNotAuthenticated, (req, res) => {
   res.render('pages/login-page.ejs');
 });
