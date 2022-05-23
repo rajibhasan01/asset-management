@@ -1,6 +1,6 @@
 import express from "express";
 import adminDashboardRouter from "./route.admin.dashboard";
-import loginRoute from "./login/route.login";
+import {loginRoute} from "./login/route.login";
 
 const registeredRouters = express.Router();
 

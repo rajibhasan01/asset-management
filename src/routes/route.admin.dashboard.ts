@@ -2,16 +2,14 @@ import { ProductService } from './../services/product/service.product';
 import { AssetService } from './../services/asset/service.asset';
 import { AssetTypeService } from './../services/asset-type/service.asset-type';
 import { ConfigService } from "../services/utility/configService";
-
-
-const config = ConfigService.getInstance().getConfig();
-
 import express from 'express';
 import invoiceRoute from './invoice/route.invoice';
+
 const adminDashboardRouter = express.Router();
 const assetTypeService = AssetTypeService.getInstance();
 const assetService = AssetService.getInstance();
 const productService = ProductService.getInstance();
+const config = ConfigService.getInstance().getConfig();
 
 adminDashboardRouter.get('/', (req, res, next) => {
   res.render('pages/index.ejs');
