@@ -228,5 +228,14 @@ adminDashboardRouter.post('/edit-product/:id', async (req, res, next) => {
   }
 });
 
+
+// Session Logout
+adminDashboardRouter.get("/logout", (req:any, res:any, next:any) => {
+  req.logout(req.user, (err:any) => {
+    if(err) return next(err);
+    res.redirect("/login");
+  });
+});
+
 adminDashboardRouter.use('/invoice', invoiceRoute);
 export = adminDashboardRouter;
