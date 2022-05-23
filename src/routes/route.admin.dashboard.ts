@@ -1,17 +1,38 @@
-import { ProductService } from './../services/product/service.product';
-import { AssetService } from './../services/asset/service.asset';
-import { AssetTypeService } from './../services/asset-type/service.asset-type';
-import { ConfigService } from "../services/utility/configService";
+import dotenv from "dotenv";
 import express from 'express';
+import passport from "passport";
+import session from "express-session";
 import invoiceRoute from './invoice/route.invoice';
+import { AssetService } from './../services/asset/service.asset';
+import { ProductService } from './../services/product/service.product';
+import { AssetTypeService } from './../services/asset-type/service.asset-type';
+
+dotenv.config()
 
 const adminDashboardRouter = express.Router();
-const assetTypeService = AssetTypeService.getInstance();
 const assetService = AssetService.getInstance();
 const productService = ProductService.getInstance();
-const config = ConfigService.getInstance().getConfig();
+const assetTypeService = AssetTypeService.getInstance();
 
-adminDashboardRouter.get('/', (req, res, next) => {
+adminDashboardRouter.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: { maxAge: 43200000 }
+}));
+
+adminDashboardRouter.use(passport.session())
+
+const checkAuth = (req:any,res:any,next:any) =>{
+  if (req.isAuthenticated()) {
+
+      next();
+  } else {
+      res.redirect('/login');
+  }
+}
+
+adminDashboardRouter.get('/', checkAuth, (req, res, next) => {
   res.render('pages/index.ejs');
 });
 

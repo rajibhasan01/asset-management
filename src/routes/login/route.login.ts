@@ -14,33 +14,30 @@ loginRoute.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 60000 }
+  cookie: { maxAge: 43200000 }
 }));
 loginRoute.use(passport.session())
 loginRoute.use(passport.initialize());
 loginRoute.use(cors());
 
 
-const checkAuth = (req:any,res:any,next:any) =>{
+const checkNotAuthenticated = (req:any, res:any, next:any) => {
   if (req.isAuthenticated()) {
-
-      next();
-  } else {
-      res.redirect('/login');
+    return res.redirect('/')
   }
+  next()
 }
 
-loginRoute.get("/", (req, res) => {
+
+
+loginRoute.get("/", checkNotAuthenticated, (req, res) => {
   res.render('pages/login-page.ejs');
 });
 
-loginRoute.get("/home", checkAuth, (req, res) => {
-  res.render('pages/index.ejs');
-});
 
 loginRoute.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
 
 loginRoute.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: config.google.failUrl }),
 (req, res) => {res.redirect(config.google.successUrl)});
 
-export  {loginRoute, checkAuth};
+export = loginRoute;
