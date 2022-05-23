@@ -1,59 +1,39 @@
 import express from "express";
 import cors from "cors";
 import passport from "passport";
-import strategy from "passport-google-oauth20";
 import { ConfigService } from "../../services/utility/configService";
-import session from 'express-session';
-import dotenv from 'dotenv';
+import session from "express-session";
+import dotenv from "dotenv";
+import "./route.auth"
 dotenv.config()
 
 
 const config = ConfigService.getInstance().getConfig();
 const loginRoute = express.Router();
-loginRoute.use(passport.initialize());
-loginRoute.use(cors());
 loginRoute.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: false
-}))
+  saveUninitialized: false,
+  cookie: { maxAge: 43200000 }
+}));
+loginRoute.use(passport.session())
+loginRoute.use(passport.initialize());
+loginRoute.use(cors());
 
 
-const GoogleStrategy = strategy.Strategy;
-
-
-passport.use(
-    new GoogleStrategy(
-      {
-        clientID: config.google.clientId,
-        clientSecret: config.google.clientSecret,
-        callbackURL: config.google.callbackURL,
-        passReqToCallback: true,
-      },
-
-      (request :any, accessToken:any, refreshToken:any, profile:any, done:any) => {
-        if (profile._json.email === "rajib.hasan@braincraftapps.com") {
-          return done(null, profile);
-        } else {
-          return done(null);
-        }
-      }
-    )
-  );
+const checkNotAuthenticated = (req:any, res:any, next:any) => {
+  if (req.isAuthenticated()) {
+    return res.redirect('/')
+  }
+  next()
+}
 
 
 
-  passport.serializeUser((user, done) => {
-    done(null, user);
-  });
-
-  passport.deserializeUser((obj, done) => {
-    done(null, obj);
-  });
-
-loginRoute.get("/", (req, res) => {
+loginRoute.get("/", checkNotAuthenticated, (req, res) => {
   res.render('pages/login-page.ejs');
 });
+
 
 loginRoute.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
 
