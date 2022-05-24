@@ -271,5 +271,5 @@ adminDashboardRouter.get("/logout", checkAuth, (req:any, res:any, next:any) => {
   });
 });
 
-adminDashboardRouter.use('/invoice', invoiceRoute);
+adminDashboardRouter.use('/invoice', checkAuth, invoiceRoute);
 export = adminDashboardRouter;
