@@ -176,7 +176,7 @@ adminDashboardRouter.post('/edit-asset/:id', checkAuth, async (req, res, next) =
       if (assetResult === 'success') {
         res.render('pages/asset-list.ejs', {
           message: 'Successfully Edited',
-          assetData: assetListResult,
+          assets: assetListResult,
         });
       } else {
         res.render('pages/edit-asset.ejs', {
