@@ -21,7 +21,16 @@ adminDashboardRouter.use(session({
   cookie: { maxAge: 43200000 }
 }));
 
-adminDashboardRouter.use(passport.session())
+adminDashboardRouter.use(passport.session());
+
+// Middle ware for no caching.
+// So, after logout we can prevent the browser's back button from accessing restricted information, after the user has logged out?
+adminDashboardRouter.use((req, res, next) => {
+  res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+  res.header('Expires', '-1');
+  res.header('Pragma', 'no-cache');
+  next()
+});
 
 const checkAuth = (req:any,res:any,next:any) =>{
   if (req.isAuthenticated()) {
