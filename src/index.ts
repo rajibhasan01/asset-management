@@ -19,6 +19,7 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, '../public')));
 app.use('/', registeredRouters);
 
+
 // start the Express server
 app.listen(port, () => {
   // tslint:disable-next-line:no-console
