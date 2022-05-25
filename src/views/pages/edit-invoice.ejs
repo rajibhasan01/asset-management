@@ -119,7 +119,17 @@
                               class="form-control"
                               type="file"
                               name="imageName"
-                              value="<%= invoiceData.imageName %>"
+                            />
+                            <input
+                            type="hidden"
+                            name="imagePath"
+                            value="<%= invoiceData.imagePath %>"
+                            />
+
+                            <input
+                            type="hidden"
+                            name="imgName"
+                            value="<%= invoiceData.imageName %>"
                             />
                           </div>
                         </div>
