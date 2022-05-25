@@ -34,22 +34,46 @@ invoiceRoute.get('/', (req, res) => {
 //     });
 // });
 
-invoiceRoute.post(
-  '/create',
-  fileUpload.fields([{ name: 'imageName', maxCount: 1 }]),
-  invoiceImage,
-  (req, res) => {
-    invoiceService
-      .AddInvoice(req.body)
-      .then((result) => {
-        res.render('pages/add-invoice.ejs', { message: result });
-      })
-      .catch((err) => console.log('error on invoice create route:', err));
-  }
-);
+// invoiceRoute.post(
+//   '/create',
+//   fileUpload.fields([{ name: 'imageName', maxCount: 1 }]),
+//   invoiceImage,
+//   (req, res) => {
+//     invoiceService
+//       .AddInvoice(req.body)
+//       .then((result) => {
+//         res.render('pages/add-invoice.ejs', { message: result });
+//       })
+//       .catch((err) => console.log('error on invoice create route:', err));
+//   }
+// );
 invoiceRoute.get('/add-invoice', (req, res) => {
   res.render('pages/add-invoice.ejs');
 });
+
+
+invoiceRoute.post('/add-invoice',
+fileUpload.fields([{ name: 'imageName', maxCount: 1 }]),
+invoiceImage,
+async (req, res)=>{
+  try{
+    const result = await invoiceService.AddInvoice(req.body);
+    const invoiceData = await invoiceService.GetAllInvoice();
+    if(result && invoiceData){
+      res.render('pages/invoice-list.ejs',{
+        message:result,
+        invoiceData
+      });
+    } else{
+      res.render('pages/add-invoice.ejs', { message: result });
+    }
+
+  } catch (error){
+    console.log('Error in add invoice post route:', error)
+  }
+});
+
+
 invoiceRoute.get('/edit/:id', (req, res) => {
   invoiceService
     .GetInvoiceById(req.params.id)
