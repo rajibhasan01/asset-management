@@ -31,7 +31,14 @@ export class DbProduct {
         const dbConn = await this.getDbConnection();
         const db = dbConn.db(config.mongo.dbName);
         const dbCollection = db.collection(this.collectionName);
-        const result = await dbCollection.insertOne(productData);
+        // for individual product entry
+        let result;
+        const total = productData.quantity;
+        for (let i=0; i<total; i++){
+          productData.quantity = 1;
+          result = await dbCollection.insertOne(productData);
+          delete productData?._id;
+        }
         await dbConn.close();
         if (result) {
           resolve('success');
@@ -39,7 +46,7 @@ export class DbProduct {
           reject('failed');
         }
       } catch (error) {
-        console.log('Error in CreateProduct method of DbProduct: ', error);
+        // console.log('Error in CreateProduct method of DbProduct: ', error);
       }
     });
   }
