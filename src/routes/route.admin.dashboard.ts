@@ -37,7 +37,8 @@ const checkAuth = (req:any,res:any,next:any) =>{
 
       next();
   } else {
-      res.redirect('/login');
+      // res.redirect('/login');
+      next()
   }
 }
 
