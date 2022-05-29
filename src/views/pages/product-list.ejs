@@ -82,7 +82,14 @@
                               <td><%=data.quantity%></td>
                               <td><%=data.invoiceNumber%></td>
                               <td><%=data.description%></td>
-                              <td><%=data.description%></td>
+                              <td><% if (data.status.toLowerCase() === "available") { %>
+                                <button class="btn bg-primary">Available</button>
+                              <%} else if(data.status.toLowerCase() === "assigned") { %>
+                                <button class="btn bg-success">Assigned</button>
+                              <%} else { %>
+                                <button class="btn bg-info">Reparing</button>
+                                <% } %>
+                                </td>
                               <td><a href="/edit-product/<%=data._id%>">Edit</a></td>
                             </tr>
                             <% }) } %>
