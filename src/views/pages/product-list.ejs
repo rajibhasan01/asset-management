@@ -1,10 +1,12 @@
 <html>
-  <head>
-    <%- include('../partials/head.ejs') %>
-  </head>
-  <body>
-    <!-- Loader starts-->
-    <%- include('../partials/loader.ejs') %>
+
+<head>
+  <%- include('../partials/head.ejs') %>
+</head>
+
+<body>
+  <!-- Loader starts-->
+  <%- include('../partials/loader.ejs') %>
     <!-- Loader ends-->
     <!-- tap on top starts-->
     <div class="tap-top"><i data-feather="chevrons-up"></i></div>
@@ -13,123 +15,189 @@
     <div class="page-wrapper compact-wrapper" id="pageWrapper">
       <!-- Page Header Start-->
       <%- include('../partials/pageHeader.ejs') %>
-      <!-- Page Header Ends                              -->
-      <!-- Page Body Start-->
-      <div class="page-body-wrapper">
-        <!-- Page Sidebar Start-->
-        <%- include('../partials/sideNav.ejs') %>
-        <!-- Page Sidebar Ends-->
-        <div class="page-body">
-          <div class="container-fluid">
-            <div class="page-title">
-              <div class="row">
-                <div class="col-12 col-sm-6">
-                  <h3>Product</h3>
-                </div>
-                <div class="col-12 col-sm-6">
-                  <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                      <a href="index.html"> <i data-feather="home"></i></a>
-                    </li>
-                    <li class="breadcrumb-item">Product</li>
-                    <li class="breadcrumb-item active">Product List</li>
-                  </ol>
+        <!-- Page Header Ends                              -->
+        <!-- Page Body Start-->
+        <div class="page-body-wrapper">
+          <!-- Page Sidebar Start-->
+          <%- include('../partials/sideNav.ejs') %>
+            <!-- Page Sidebar Ends-->
+            <div class="page-body">
+              <div class="container-fluid">
+                <div class="page-title">
+                  <div class="row">
+                    <div class="col-12 col-sm-6">
+                      <h3>Product</h3>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                      <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                          <a href="index.html"> <i data-feather="home"></i></a>
+                        </li>
+                        <li class="breadcrumb-item">Product</li>
+                        <li class="breadcrumb-item active">Product List</li>
+                      </ol>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <!-- Container-fluid starts-->
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-sm-12">
-                <div class="card">
-                  <div class="card-header pb-0">
-                    <% if(typeof message !== 'undefined'){ %>
-                      <div
-                        class="alert alert-success alert-dismissible fade show"
-                        role="alert"
-                      >
-                        <strong><%= message %></strong>
-                        <button
-                          type="button"
-                          class="btn-close"
-                          data-bs-dismiss="alert"
-                          aria-label="Close"
-                        ></button>
+              <!-- Container-fluid starts-->
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="card">
+                      <div class="card-header pb-0">
+                        <% if(typeof message !=='undefined' ){ %>
+                          <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>
+                              <%= message %>
+                            </strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                          </div>
+                          <% } %>
+                            <h5 class="mb-3">Product List</h5>
+
                       </div>
-                      <% } %>
-                    <h5 class="mb-3">Product List</h5>
+                      <div class="card-body">
+                        <div class="table-responsive">
+                          <table class="display" id="advance-1">
+                            <thead>
+                              <tr>
+                                <th>Brand</th>
+                                <th>Quantity</th>
+                                <th>InvoiceId</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                                <th>Edit</th>
+                                <th>Action</th>
 
-                  </div>
-                  <div class="card-body">
-                    <div class="table-responsive">
-                      <table class="display" id="advance-1">
-                        <thead>
-                          <tr>
-                            <th>Brand</th>
-                            <th>Quantity</th>
-                            <th>InvoiceId</th>
-                            <th>Description</th>
-                            <th>Status</th>
-                            <th>Edit</th>
-                            <th>Action</th>
-                          </tr>
-                          </thead>
-                          <tbody>
-                          <% if(typeof products !== 'undefined'){
-                            products.map((data) => { %>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <% if(typeof products !=='undefined' ){ products.map((data)=> { %>
+                                <tr>
+                                  <td>
+                                    <%=data.brand%>
+                                  </td>
+                                  <td>
+                                    <%=data.quantity%>
+                                  </td>
+                                  <td>
+                                    <%=data.invoiceNumber%>
+                                  </td>
+                                  <td>
+                                    <%=data.description%>
+                                  </td>
+                                  <td>
+                                    <% if (data.status.toLowerCase()==="available" ) { %>
+                                      <p class="text-primary">IN-STORE</p>
+                                      <%} else if(data.status.toLowerCase()==="assigned" ) { %>
+                                        <p class="text-success">ASSIGNED</p>
+                                        <%} else if(data.status.toLowerCase()==="repair" ) { %>
+                                          <p class="text-info">REPAIR</p>
+                                          <% } %>
+                                  </td>
+                                  <td><a href="/edit-product/<%=data._id%>">Edit</a></td>
+                                  <td>
+                                    <% if (data.status.toLowerCase()==="available" ) { %>
+                                      <button type="button" class="btn bg-primary bbt" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal" data-name="<%= data.brand%>"
+                                        data-id="<%= data._id %>">Available</button>
+                                      <%} else if(data.status.toLowerCase()==="assigned" ) { %>
+                                        <button type="button" class="btn bg-success bbt" data-bs-toggle="modal"
+                                          data-bs-target="#exampleModal" data-name="<%= data.brand%>"
+                                          data-id="<%= data._id %>">Re-assign </button>
+                                        <%} else if(data.status.toLowerCase()==="repair" ) { %>
+                                          <button class="btn bg-info custom">Reparing</button>
+                                          <% } %>
+                                  </td>
+
+                                  <!-- Modal -->
+                                  <div class="modal fade" id="exampleModal" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h4 class="card-title mb-0">Add Ticket Number</h4>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <form class="card" method="post" action="">
+                                            <div class="card-body">
+                                              <div class="row">
+                                                <div class="col-md-12">
+                                                  <div class="mb-3">
+                                                    <label class="form-label">Product ID : <input type="text"
+                                                        class="border-0" id="product_id" value=""></label>
+                                                    <label class="form-label">Product Brand : <input type="text"
+                                                        class="border-0" id="product_name" value=""> </label>
+                                                  </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                  <div class="mb-3">
+                                                    <label class="form-label">Ticket Number</label>
+                                                    <input class="form-control" type="text"
+                                                      placeholder="ticket number (xxxxxxxxxxxxx)" name="ticketNumber"
+                                                      value="" required />
+                                                  </div>
+                                                </div>
+                                          </form>
+                                          <!-- Container-fluid Ends-->
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                      <button type="submit" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                  </div>
+
+                                </tr>
+                                <% }) } %>
+                            </tbody>
                             <tr>
-                              <td><%=data.brand%></td>
-                              <td><%=data.quantity%></td>
-                              <td><%=data.invoiceNumber%></td>
-                              <td><%=data.description%></td>
-                              <td><% if (data.status.toLowerCase() === "available") { %>
-                                <p class="text-primary">IN-STORE</p>
-                              <%} else if(data.status.toLowerCase() === "assigned") { %>
-                                <p class="text-success">ASSIGNED</p>
-                                <%} else if(data.status.toLowerCase() === "repair") { %>
-                                <p class="text-info">REPAIR</p>
-                                <% } %>
-                                </td>
-                              <td><a href="/edit-product/<%=data._id%>">Edit</a></td>
-                              <td><% if (data.status.toLowerCase() === "available") { %>
-                                <button class="btn bg-primary">Available</button>
-                              <%} else if(data.status.toLowerCase() === "assigned") { %>
-                                <button class="btn bg-success">Re-assign</button>
-                              <%} else if(data.status.toLowerCase() === "repair") { %>
-                                <button class="btn bg-info custom">Reparing</button>
-                                <% } %>
-                                </td>
-                            </tr>
-                            <% }) } %>
-                        </tbody>
-                          <tr>
-                            <th>Brand</th>
-                            <th>Quantity</th>
-                            <th>InvoiceId</th>
-                            <th>Description</th>
-                            <th>Status</th>
-                            <th>Edit</th>
-                            <th>Action</th>
+                              <th>Brand</th>
+                              <th>Quantity</th>
+                              <th>InvoiceId</th>
+                              <th>Description</th>
+                              <th>Status</th>
+                              <th>Edit</th>
+                              <th>Action</th>
 
-                          </tr>
-                        </tfoot>
-                      </table>
+                            </tr>
+                            </tfoot>
+                          </table>
+
+                        </div>
+                      </div>
+
                     </div>
                   </div>
                 </div>
               </div>
               <!-- DOM / jQuery  Ends-->
 
+
               <!-- Column rendering Ends-->
             </div>
-          </div>
-          <!-- Container-fluid Ends-->
         </div>
-        <!-- footer start-->
-        <%- include('../partials/footer.ejs') %>
-      </div>
+        <!-- Container-fluid Ends-->
     </div>
-    <%- include('../partials/jsLibrary.ejs') %>
-  </body>
+    <!-- footer start-->
+    <%- include('../partials/footer.ejs') %>
+      </div>
+      </div>
+      <%- include('../partials/jsLibrary.ejs') %>
+
+        <script type="text/javascript">
+          $(document).on("click", ".bbt", function () {
+            var myBookId = $(this).data('id');
+            var brandName = $(this).data('name')
+            $("#product_id").val(myBookId);
+            $("#product_name").val(brandName);
+          });
+        </script>
+</body>
+
 </html>
