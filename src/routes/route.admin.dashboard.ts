@@ -6,6 +6,7 @@ import invoiceRoute from './invoice/route.invoice';
 import { AssetService } from './../services/asset/service.asset';
 import { ProductService } from './../services/product/service.product';
 import { AssetTypeService } from './../services/asset-type/service.asset-type';
+import transactionRoute from "./transaction/route.transaction";
 
 dotenv.config()
 
@@ -272,5 +273,7 @@ adminDashboardRouter.get("/logout", checkAuth, (req:any, res:any, next:any) => {
   });
 });
 
+
 adminDashboardRouter.use('/invoice', checkAuth, invoiceRoute);
+adminDashboardRouter.use('/transaction', checkAuth, transactionRoute)
 export = adminDashboardRouter;
