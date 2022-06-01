@@ -63,10 +63,11 @@
                             <thead>
                               <tr>
                                 <th>Brand</th>
+                                <th>ProductID</th>
                                 <th>Quantity</th>
                                 <th>InvoiceId</th>
                                 <th>Description</th>
-                                <th>Status</th>
+                                <th>Status / TokenNumber</th>
                                 <th>Edit</th>
                                 <th>Action</th>
 
@@ -77,6 +78,9 @@
                                 <tr>
                                   <td>
                                     <%=data.brand%>
+                                  </td>
+                                  <td>
+                                    <%=data.pid%>
                                   </td>
                                   <td>
                                     <%=data.quantity%>
@@ -92,6 +96,8 @@
                                       <p class="text-success"><%= data.ticket %></p>
                                       <%} else if(data.status.toLowerCase()==="available" ) { %>
                                         <p class="text-primary">AVAILABLE</p>
+                                      <%} else if(data.status.toLowerCase()==="repair" ) { %>
+                                        <p class="text-info">REPAIRING</p>
                                     <% } %>
                                   </td>
                                   <td><a href="/edit-product/<%=data._id%>">Edit</a></td>
@@ -105,7 +111,7 @@
                                           data-bs-target="#exampleModal" data-name="<%= data.brand%>"
                                           data-id="<%= data._id %>">Re-assign </button>
                                         <%} else if(data.status.toLowerCase()==="repair" ) { %>
-                                          <button class="btn bg-info custom">Reparing</button>
+                                          <button class="btn bg-info">Reparing</button>
                                           <% } %>
                                   </td>
 
@@ -159,10 +165,11 @@
                             </tbody>
                             <tr>
                               <th>Brand</th>
+                              <th>ProductID</th>
                               <th>Quantity</th>
                               <th>InvoiceId</th>
                               <th>Description</th>
-                              <th>Status</th>
+                              <th>Status / TokenNumber</th>
                               <th>Edit</th>
                               <th>Action</th>
 

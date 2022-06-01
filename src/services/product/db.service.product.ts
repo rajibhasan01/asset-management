@@ -1,6 +1,7 @@
 import { Product } from './../../models/model.product';
 import { MongoClient, ObjectId } from 'mongodb';
 import { ConfigService } from './../utility/configService';
+import { uid } from '../utility/functions';
 const config = ConfigService.getInstance().getConfig();
 export class DbProduct {
   private collectionName: string;
@@ -36,6 +37,7 @@ export class DbProduct {
         const total = productData.quantity;
         for (let i=0; i<total; i++){
           productData.quantity = 1;
+          productData.pid = uid();
           result = await dbCollection.insertOne(productData);
           delete productData?._id;
         }
@@ -81,6 +83,7 @@ export class DbProduct {
           { _id: new ObjectId(productId) },
           {
             $set: {
+              pid: product.pid,
               assetId: product.assetId,
               brand: product.brand,
               invoiceNumber: product.invoiceNumber,

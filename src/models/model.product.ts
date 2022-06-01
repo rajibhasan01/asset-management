@@ -5,6 +5,7 @@ export class Product {
   description?: string;
   quantity?: number;
   _id?:any;
+  pid?:any;
 
   private static product: Product;
   private constructor() {}

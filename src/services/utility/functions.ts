@@ -29,3 +29,7 @@ export const invoiceImage = (req: any, res: any, next: any) => {
 
   next();
 };
+
+export const uid = () =>{
+  return Number(Math.random().toString() + Date.now().toString().substr(2)).toFixed(10).split('.')[1];
+}

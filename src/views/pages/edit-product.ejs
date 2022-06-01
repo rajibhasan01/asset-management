@@ -147,11 +147,18 @@
                             ><%= productResult.description %></textarea>
                           </div>
                         </div>
+                        <input
+                              class="form-control"
+                              type="number"
+                              name="pid"
+                              hidden
+                              value="<%= productResult.pid %>"
+                            />
                       </div>
                     </div>
                     <div class="card-footer text-end">
                       <button class="btn btn-primary" type="submit">
-                        Add Type
+                        Submit
                       </button>
                     </div>
                   </form>
