@@ -7,6 +7,8 @@ import { AssetService } from './../services/asset/service.asset';
 import { ProductService } from './../services/product/service.product';
 import { AssetTypeService } from './../services/asset-type/service.asset-type';
 import transactionRoute from "./transaction/route.transaction";
+import { TransactionService } from "./../services/transaction/service.transaction";
+import { ObjectId } from "mongodb";
 
 dotenv.config()
 
@@ -14,6 +16,8 @@ const adminDashboardRouter = express.Router();
 const assetService = AssetService.getInstance();
 const productService = ProductService.getInstance();
 const assetTypeService = AssetTypeService.getInstance();
+const transactionService = TransactionService.getInstance();
+
 
 adminDashboardRouter.use(session({
   secret: process.env.SESSION_SECRET,
@@ -220,9 +224,24 @@ adminDashboardRouter.post('/add-product', checkAuth, async (req, res, next) => {
 
 // Product List Get API
 adminDashboardRouter.get('/product-list', checkAuth, async (req, res, next) => {
-  const products = await productService.GetProductList();
+  const transit :any = await transactionService.GetTransaction();
+  const products :any = await productService.GetProductList();
+  // ticketNumber adjust with product
+  if (transit && products){
+    const productsLength = products.length;
+    const transitLength = transit.length;
+
+    for (let i=0; i<productsLength; i++){
+      for (let j= 0; j<transitLength; j++){
+        if(products[i]._id.toString() === transit[j].productId.toString() && transit[j].status === "1"){
+          products[i].ticket = transit[j].ticketNumber;
+          products[i].status = "assigned";
+        }
+      }
+    }
+  }
   if (products) {
-    res.render('pages/product-list.ejs', { products });
+    res.render('pages/product-list.ejs', { products});
   } else {
     res.render('pages/product-list.ejs');
   }
@@ -244,12 +263,27 @@ adminDashboardRouter.post('/edit-product/:id', checkAuth, async (req, res, next)
       productId,
       req.body
     );
-    const productsResult = await productService.GetProductList();
+    const transit :any = await transactionService.GetTransaction();
+  const products :any = await productService.GetProductList();
+  // ticketNumber adjust with product
+  if (transit && products){
+    const productsLength = products.length;
+    const transitLength = transit.length;
+
+    for (let i=0; i<productsLength; i++){
+      for (let j= 0; j<transitLength; j++){
+        if(products[i]._id.toString() === transit[j].productId.toString() && transit[j].status === "1"){
+          products[i].ticket = transit[j].ticketNumber;
+          products[i].status = "assigned";
+        }
+      }
+    }
+  }
     if (productResult) {
       if (productResult === 'success') {
         res.render('pages/product-list.ejs', {
           message: 'Successfully Edited',
-          products: productsResult,
+          products,
         });
       } else {
         res.render('pages/edit-product.ejs', {

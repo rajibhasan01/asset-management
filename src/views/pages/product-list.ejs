@@ -88,13 +88,11 @@
                                     <%=data.description%>
                                   </td>
                                   <td>
-                                    <% if (data.status.toLowerCase()==="available" ) { %>
-                                      <p class="text-primary">IN-STORE</p>
-                                      <%} else if(data.status.toLowerCase()==="assigned" ) { %>
-                                        <p class="text-success">ASSIGNED</p>
-                                        <%} else if(data.status.toLowerCase()==="repair" ) { %>
-                                          <p class="text-info">REPAIR</p>
-                                          <% } %>
+                                    <% if (data.ticket && data.status.toLowerCase()==="assigned") { %>
+                                      <p class="text-success"><%= data.ticket %></p>
+                                      <%} else if(data.status.toLowerCase()==="available" ) { %>
+                                        <p class="text-primary">AVAILABLE</p>
+                                    <% } %>
                                   </td>
                                   <td><a href="/edit-product/<%=data._id%>">Edit</a></td>
                                   <td>
@@ -122,13 +120,13 @@
                                             aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                          <form class="card" method="post" action="">
+                                          <form class="card" method="post" action="/transaction/add-transaction">
                                             <div class="card-body">
                                               <div class="row">
                                                 <div class="col-md-12">
                                                   <div class="mb-3">
                                                     <label class="form-label">Product ID : <input type="text"
-                                                        class="border-0" id="product_id" value=""></label>
+                                                        class="border-0" id="product_id" name="productId" value=""></label>
                                                     <label class="form-label">Product Brand : <input type="text"
                                                         class="border-0" id="product_name" value=""> </label>
                                                   </div>
@@ -141,7 +139,9 @@
                                                       value="" required />
                                                   </div>
                                                 </div>
-                                          </form>
+
+                                                <input hidden class="form-control" type="text" name="status" value="1" />
+
                                           <!-- Container-fluid Ends-->
                                         </div>
                                       </div>
@@ -151,6 +151,7 @@
                                         data-bs-dismiss="modal">Close</button>
                                       <button type="submit" class="btn btn-primary">Save changes</button>
                                     </div>
+                                  </form>
                                   </div>
 
                                 </tr>
