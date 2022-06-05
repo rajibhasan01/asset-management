@@ -235,7 +235,6 @@ adminDashboardRouter.get('/product-list', checkAuth, async (req, res, next) => {
       for (let j= 0; j<transitLength; j++){
         if(products[i]._id.toString() === transit[j].productId.toString() && transit[j].status === "1"){
           products[i].ticket = transit[j].ticketNumber;
-          products[i].status = "assigned";
         }
       }
     }
@@ -274,7 +273,6 @@ adminDashboardRouter.post('/edit-product/:id', checkAuth, async (req, res, next)
       for (let j= 0; j<transitLength; j++){
         if(products[i]._id.toString() === transit[j].productId.toString() && transit[j].status === "1"){
           products[i].ticket = transit[j].ticketNumber;
-          products[i].status = "assigned";
         }
       }
     }

@@ -76,6 +76,7 @@ export class DbProduct {
   public async EditProductById(productId: string, product: Product) {
     return new Promise(async (resolve, reject) => {
       try {
+        console.log(product);
         const dbConn = await this.getDbConnection();
         const db = dbConn.db(config.mongo.dbName);
         const dbCollection = db.collection(this.collectionName);
@@ -89,6 +90,7 @@ export class DbProduct {
               invoiceNumber: product.invoiceNumber,
               description: product.description,
               quantity: product.quantity,
+              status: product.status
             },
           }
         );

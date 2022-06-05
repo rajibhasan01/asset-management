@@ -24,8 +24,22 @@ transactionRoute.get("/", (req, res) => {
  */
 transactionRoute.post("/add-transaction", async (req, res) => {
   try {
+    let result:any = 'hello';
+    console.log(req.body)
 
-    const result = await transactionService.AddTransaction(req.body);
+    if(req.body.action === "assign" && req.body.ticketNumber !== ""){
+      const product:any = await productService.GetProductById(req.body.productId);
+      product.status = req.body.action;
+      const update = await productService.EditProductById(req.body.productId,product);
+      delete req.body.action;
+      result = await transactionService.AddTransaction(req.body);
+    }
+    else if(req.body.action !== "assign"){
+      const product:any = await productService.GetProductById(req.body.productId);
+      product.status = req.body.action;
+      result = await productService.EditProductById(req.body.productId,product);
+    }
+
     const products :any = await productService.GetProductList();
     const transit :any = await transactionService.GetTransaction();
 
@@ -37,7 +51,6 @@ transactionRoute.post("/add-transaction", async (req, res) => {
           for (let j= 0; j<transitLength; j++){
             if(products[i]._id.toString() === transit[j].productId.toString() && transit[j].status === "1"){
               products[i].ticket = transit[j].ticketNumber;
-              products[i].status = "assigned";
             }
           }
         }

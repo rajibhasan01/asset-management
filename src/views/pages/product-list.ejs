@@ -67,7 +67,7 @@
                                 <th>Quantity</th>
                                 <th>InvoiceId</th>
                                 <th>Description</th>
-                                <th>Status / TokenNumber</th>
+                                <th>Status / Ticket</th>
                                 <th>Edit</th>
                                 <th>Action</th>
 
@@ -92,7 +92,7 @@
                                     <%=data.description%>
                                   </td>
                                   <td>
-                                    <% if (data.ticket && data.status.toLowerCase()==="assigned") { %>
+                                    <% if (data.ticket && data.status.toLowerCase()==="assign") { %>
                                       <p class="text-success"><%= data.ticket %></p>
                                       <%} else if(data.status.toLowerCase()==="available" ) { %>
                                         <p class="text-primary">AVAILABLE</p>
@@ -106,12 +106,14 @@
                                       <button type="button" class="btn bg-primary bbt" data-bs-toggle="modal"
                                         data-bs-target="#exampleModal" data-name="<%= data.brand%>" data-pid="<%= data.pid%>"
                                         data-id="<%= data._id %>">Available</button>
-                                      <%} else if(data.status.toLowerCase()==="assigned" ) { %>
+                                      <%} else if(data.status.toLowerCase()==="assign" ) { %>
                                         <button type="button" class="btn bg-success bbt" data-bs-toggle="modal"
                                           data-bs-target="#exampleModal" data-name="<%= data.brand%>" data-pid="<%= data.pid%>"
                                           data-id="<%= data._id %>">Re-assign </button>
                                         <%} else if(data.status.toLowerCase()==="repair" ) { %>
-                                          <button class="btn bg-info">Reparing</button>
+                                          <button type="button" class="btn bg-info bbt" data-bs-toggle="modal"
+                                          data-bs-target="#exampleModal" data-name="<%= data.brand%>" data-pid="<%= data.pid%>"
+                                          data-id="<%= data._id %>">Reparing</button>
                                           <% } %>
                                   </td>
 
@@ -138,16 +140,31 @@
                                                         class="border-0" id="product_name" value=""> </label>
                                                   </div>
                                                 </div>
-                                                <div class="col-md-12">
+                                                <div class="col-md-12" id="ticket">
                                                   <div class="mb-3">
                                                     <label class="form-label">Ticket Number</label>
                                                     <input class="form-control" type="text"
                                                       placeholder="ticket number (xxxxxxxxxxxxx)" name="ticketNumber"
-                                                      value="" required />
+                                                      value="" />
                                                   </div>
                                                 </div>
 
                                                 <input hidden class="form-control" type="text" name="status" value="1" />
+
+                                                <div class="d-flex">
+                                                  <div class="form-check form-check-inline">
+                                                    <input class="form-check-input rbtn" type="radio" name="action" id="assign" value="assign" checked="checked">
+                                                    <label class="form-check-label text-success" for="inlineRadio1">Assign</label>
+                                                  </div>
+                                                  <div class="form-check form-check-inline">
+                                                    <input class="form-check-input rbtn" type="radio" name="action" id="repair" value="repair">
+                                                    <label class="form-check-label text-info" for="inlineRadio2">Repair</label>
+                                                  </div>
+                                                  <div class="form-check form-check-inline">
+                                                    <input class="form-check-input rbtn" type="radio" name="action" id="availabe" value="available">
+                                                    <label class="form-check-label text-primary" for="inlineRadio3">In store</label>
+                                                  </div>
+                                                </div>
 
                                           <!-- Container-fluid Ends-->
                                         </div>
@@ -170,7 +187,7 @@
                               <th>Quantity</th>
                               <th>InvoiceId</th>
                               <th>Description</th>
-                              <th>Status / TokenNumber</th>
+                              <th>Status / Ticket</th>
                               <th>Edit</th>
                               <th>Action</th>
 
@@ -208,6 +225,21 @@
             document.getElementById('pbd').innerHTML = brandName;
             $("#product_id").val(Id);
             $("#product_name").val(brandName);
+          });
+
+          $(document).on("click", ".rbtn", function () {
+            const selectedBtn = $(this).val();
+            if(selectedBtn == "assign"){
+              document.getElementById('ticket').classList.remove("d-none");
+            }
+            else if (selectedBtn == "repair"){
+              document.getElementById('ticket').classList.add("d-none");
+
+            }
+            else{
+              document.getElementById('ticket').classList.add("d-none");
+            }
+
           });
         </script>
 </body>
