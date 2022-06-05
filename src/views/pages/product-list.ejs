@@ -104,11 +104,11 @@
                                   <td>
                                     <% if (data.status.toLowerCase()==="available" ) { %>
                                       <button type="button" class="btn bg-primary bbt" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal" data-name="<%= data.brand%>"
+                                        data-bs-target="#exampleModal" data-name="<%= data.brand%>" data-pid="<%= data.pid%>"
                                         data-id="<%= data._id %>">Available</button>
                                       <%} else if(data.status.toLowerCase()==="assigned" ) { %>
                                         <button type="button" class="btn bg-success bbt" data-bs-toggle="modal"
-                                          data-bs-target="#exampleModal" data-name="<%= data.brand%>"
+                                          data-bs-target="#exampleModal" data-name="<%= data.brand%>" data-pid="<%= data.pid%>"
                                           data-id="<%= data._id %>">Re-assign </button>
                                         <%} else if(data.status.toLowerCase()==="repair" ) { %>
                                           <button class="btn bg-info">Reparing</button>
@@ -131,9 +131,10 @@
                                               <div class="row">
                                                 <div class="col-md-12">
                                                   <div class="mb-3">
-                                                    <label class="form-label">Product ID : <input type="text"
+                                                    <label class="form-label">Product ID : <span id="pid" class="text-dark"></span> <input hidden type="text"
                                                         class="border-0" id="product_id" name="productId" value=""></label>
-                                                    <label class="form-label">Product Brand : <input type="text"
+                                                        <br>
+                                                    <label class="form-label">Product Brand : <span id="pbd" class="text-dark"></span> <input hidden type="text"
                                                         class="border-0" id="product_name" value=""> </label>
                                                   </div>
                                                 </div>
@@ -200,9 +201,12 @@
 
         <script type="text/javascript">
           $(document).on("click", ".bbt", function () {
-            var myBookId = $(this).data('id');
-            var brandName = $(this).data('name')
-            $("#product_id").val(myBookId);
+            var Id = $(this).data('id');
+            var brandName = $(this).data('name');
+            var pid = $(this).data('pid');
+            document.getElementById('pid').innerHTML = pid;
+            document.getElementById('pbd').innerHTML = brandName;
+            $("#product_id").val(Id);
             $("#product_name").val(brandName);
           });
         </script>
