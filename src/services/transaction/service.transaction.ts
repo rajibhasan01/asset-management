@@ -49,8 +49,14 @@ export class TransactionService implements TransactionInterface {
      * Edittransaction
      */
 
-    public EditTransaction(transactionData: Transaction) {
-        throw new Error('Method not implemented.');
+    public EditTransaction(productId: string) {
+        return new Promise(async (resolve, reject) => {
+            await dbTransaction.EditTransaction(productId)
+            .then((result) =>{
+                resolve(result);
+            })
+            .catch ((error) => reject(error));
+        })
     }
 
     /**

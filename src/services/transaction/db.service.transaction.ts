@@ -73,6 +73,35 @@ export class DbTransaction {
   /**
    * EditTransaction
    */
+  public EditTransaction(productId: string) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const dbConn = await this.getDbConnection();
+        const db = dbConn.db(config.mongo.dbName);
+        const dbCollection = db.collection(this.collectionName);
+        const query = { productId, status: "1" };
+        const result = await dbCollection.updateOne(query, {
+          $set: {
+            status: "0",
+          },
+        });
+        await dbConn.close();
+        if (result) {
+          resolve("success");
+        } else {
+          reject("failed");
+        }
+      } catch (error) {
+        console.log(
+          "Error in EditTransactionById method of DbTransaction: ",
+          error
+        );
+      }
+    });
+  }
+  /**
+   * EditTransactionById
+   */
   public EditTransactionById(transactionId: string, transaction: Transaction) {
     return new Promise(async (resolve, reject) => {
       try {
@@ -132,13 +161,13 @@ export class DbTransaction {
   /**
    * GetTransactionByProductId
    */
-   public GetTransactionByProductId(productId: string) {
+  public GetTransactionByProductId(productId: string) {
     return new Promise(async (resolve, reject) => {
       try {
         const dbConn = await this.getDbConnection();
         const db = dbConn.db(config.mongo.dbName);
         const dbCollection = db.collection(this.collectionName);
-        const result = await dbCollection.find({productId}).toArray();
+        const result = await dbCollection.find({ productId }).toArray();
         if (result) {
           resolve(result);
         } else {
