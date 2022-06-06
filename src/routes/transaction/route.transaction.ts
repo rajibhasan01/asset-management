@@ -65,4 +65,15 @@ transactionRoute.post("/add-transaction", async (req, res) => {
   }
 });
 
+transactionRoute.get("/:id", (req, res) => {
+  const pid = req.params.id;
+  transactionService.GetTransactionByProductId(pid).then((result) => {
+    if (result) {
+      res.send(result);
+    } else {
+      res.send({ msg: "nothing found" });
+    }
+  });
+});
+
 export = transactionRoute;

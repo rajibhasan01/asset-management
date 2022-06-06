@@ -84,4 +84,19 @@ export class TransactionService implements TransactionInterface {
         });
 
     }
+    /**
+     *
+     * GetTransactionByProductId
+     */
+
+         public GetTransactionByProductId(prouductId: string) {
+            return new Promise(async (resolve, reject) =>{
+                await dbTransaction.GetTransactionByProductId(prouductId)
+                .then((result) =>{
+                    resolve(result);
+                })
+                .catch ((error) => reject(error));
+            });
+
+        }
 }

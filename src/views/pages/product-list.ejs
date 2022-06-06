@@ -68,6 +68,7 @@
                                 <th>InvoiceId</th>
                                 <th>Description</th>
                                 <th>Status / Ticket</th>
+                                <th>History</th>
                                 <th>Edit</th>
                                 <th>Action</th>
 
@@ -76,48 +77,66 @@
                             <tbody>
                               <% if(typeof products !=='undefined' ){ products.map((data)=> { %>
                                 <tr>
+                                  <!-- Product Brand -->
                                   <td>
                                     <%=data.brand%>
                                   </td>
+                                  <!-- Product Id -->
                                   <td>
                                     <%=data.pid%>
                                   </td>
+                                  <!-- Quantity -->
                                   <td>
                                     <%=data.quantity%>
                                   </td>
+                                  <!-- Invoice Number -->
                                   <td>
                                     <%=data.invoiceNumber%>
                                   </td>
+                                  <!-- Description -->
                                   <td>
                                     <%=data.description%>
                                   </td>
+                                  <!-- Status / Ticket -->
                                   <td>
-                                    <% if (data.ticket && data.status.toLowerCase()==="assign") { %>
-                                      <p class="text-success"><%= data.ticket %></p>
+                                    <% if (data.ticket && data.status.toLowerCase()==="assign" ) { %>
+                                      <p class="text-success">
+                                        <%= data.ticket %>
+                                      </p>
                                       <%} else if(data.status.toLowerCase()==="available" ) { %>
                                         <p class="text-primary">AVAILABLE</p>
-                                      <%} else if(data.status.toLowerCase()==="repair" ) { %>
-                                        <p class="text-info">REPAIRING</p>
-                                    <% } %>
+                                        <%} else if(data.status.toLowerCase()==="repair" ) { %>
+                                          <p class="text-info">REPAIRING</p>
+                                          <% } %>
                                   </td>
+                                  <!-- Log Button -->
+                                  <td>
+                                    <a id="log" data-bs-toggle="modal" data-bs-target="#logModal"
+                                      data-name="<%= data.brand%>" data-pid="<%= data.pid%>" data-id="<%= data._id %>"
+                                      href="#">Log</a>
+                                  </td>
+
+                                  <!-- Edit Button -->
                                   <td><a href="/edit-product/<%=data._id%>">Edit</a></td>
+
+                                  <!-- Action Button -->
                                   <td>
                                     <% if (data.status.toLowerCase()==="available" ) { %>
                                       <button type="button" class="btn bg-primary bbt" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal" data-name="<%= data.brand%>" data-pid="<%= data.pid%>"
-                                        data-id="<%= data._id %>">Available</button>
+                                        data-bs-target="#exampleModal" data-name="<%= data.brand%>"
+                                        data-pid="<%= data.pid%>" data-id="<%= data._id %>">Available</button>
                                       <%} else if(data.status.toLowerCase()==="assign" ) { %>
                                         <button type="button" class="btn bg-success bbt" data-bs-toggle="modal"
-                                          data-bs-target="#exampleModal" data-name="<%= data.brand%>" data-pid="<%= data.pid%>"
-                                          data-id="<%= data._id %>">Re-assign </button>
+                                          data-bs-target="#exampleModal" data-name="<%= data.brand%>"
+                                          data-pid="<%= data.pid%>" data-id="<%= data._id %>">Re-assign </button>
                                         <%} else if(data.status.toLowerCase()==="repair" ) { %>
                                           <button type="button" class="btn bg-info bbt" data-bs-toggle="modal"
-                                          data-bs-target="#exampleModal" data-name="<%= data.brand%>" data-pid="<%= data.pid%>"
-                                          data-id="<%= data._id %>">Reparing</button>
+                                            data-bs-target="#exampleModal" data-name="<%= data.brand%>"
+                                            data-pid="<%= data.pid%>" data-id="<%= data._id %>">Reparing</button>
                                           <% } %>
                                   </td>
 
-                                  <!-- Modal -->
+                                  <!-- Modal For Action-->
                                   <div class="modal fade" id="exampleModal" tabindex="-1"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
@@ -127,17 +146,20 @@
                                           <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                         </div>
-                                        <div class="modal-body">
-                                          <form class="card" method="post" action="/transaction/add-transaction">
+
+                                        <form class="card" method="post" action="/transaction/add-transaction">
+                                          <div class="modal-body">
                                             <div class="card-body">
                                               <div class="row">
                                                 <div class="col-md-12">
                                                   <div class="mb-3">
-                                                    <label class="form-label">Product ID : <span id="pid" class="text-dark"></span> <input hidden type="text"
-                                                        class="border-0" id="product_id" name="productId" value=""></label>
-                                                        <br>
-                                                    <label class="form-label">Product Brand : <span id="pbd" class="text-dark"></span> <input hidden type="text"
-                                                        class="border-0" id="product_name" value=""> </label>
+                                                    <label class="form-label">Product ID : <span id="pid"
+                                                        class="text-dark"></span> <input hidden type="text"
+                                                        class="border-0" id="product_id" name="productId"
+                                                        value=""></label>
+                                                    <br>
+                                                    <label class="form-label">Product Brand : <span id="pbd"
+                                                        class="text-dark"></span></label>
                                                   </div>
                                                 </div>
                                                 <div class="col-md-12" id="ticket">
@@ -149,33 +171,88 @@
                                                   </div>
                                                 </div>
 
-                                                <input hidden class="form-control" type="text" name="status" value="1" />
+                                                <input hidden class="form-control" type="text" name="status"
+                                                  value="1" />
 
+                                                <!-- Radio Button -->
                                                 <div class="d-flex">
                                                   <div class="form-check form-check-inline">
-                                                    <input class="form-check-input rbtn" type="radio" name="action" id="assign" value="assign" checked="checked">
-                                                    <label class="form-check-label text-success" for="inlineRadio1">Assign</label>
+                                                    <input class="form-check-input rbtn" type="radio" name="action"
+                                                      id="assign" value="assign" checked="checked">
+                                                    <label class="form-check-label text-success"
+                                                      for="inlineRadio1">Assign</label>
                                                   </div>
                                                   <div class="form-check form-check-inline">
-                                                    <input class="form-check-input rbtn" type="radio" name="action" id="repair" value="repair">
-                                                    <label class="form-check-label text-info" for="inlineRadio2">Repair</label>
+                                                    <input class="form-check-input rbtn" type="radio" name="action"
+                                                      id="repair" value="repair">
+                                                    <label class="form-check-label text-info"
+                                                      for="inlineRadio2">Repair</label>
                                                   </div>
                                                   <div class="form-check form-check-inline">
-                                                    <input class="form-check-input rbtn" type="radio" name="action" id="availabe" value="available">
-                                                    <label class="form-check-label text-primary" for="inlineRadio3">In store</label>
+                                                    <input class="form-check-input rbtn" type="radio" name="action"
+                                                      id="availabe" value="available">
+                                                    <label class="form-check-label text-primary" for="inlineRadio3">In
+                                                      store</label>
                                                   </div>
                                                 </div>
 
-                                          <!-- Container-fluid Ends-->
-                                        </div>
+                                                <!-- Container-fluid Ends-->
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                              data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                          </div>
+                                        </form>
                                       </div>
                                     </div>
-                                    <div class="modal-footer">
-                                      <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                      <button type="submit" class="btn btn-primary">Save changes</button>
+                                  </div>
+
+                                  <!-- Modal For Log-->
+                                  <div class="modal fade" id="logModal" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h4 class="card-title mb-0">Product Log</h4>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                        </div>
+
+                                        <form class="card" method="post" action="/transaction/add-transaction">
+                                          <div class="modal-body">
+                                            <div class="card-body">
+                                              <div class="row">
+                                                <div class="col-md-12">
+                                                  <div class="mb-3">
+                                                    <label class="form-label">Product ID : <span id="productID"
+                                                        class="text-dark"></span> <input hidden type="text"
+                                                        class="border-0" id="inputPID" name="productId"
+                                                        value=""></label>
+                                                    <br>
+                                                    <label class="form-label">Product Brand : <span id="productBrand"
+                                                        class="text-dark"></span></label>
+                                                  </div>
+                                                  <div class="">
+                                                    <label>Previous Ticket Number</label>
+                                                    <br>
+                                                    <ul id="result" class="list-bullets"></ul>
+                                                  </div>
+                                                </div>
+                                                <!-- Container-fluid Ends-->
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                              data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                          </div>
+                                        </form>
+                                      </div>
                                     </div>
-                                  </form>
                                   </div>
 
                                 </tr>
@@ -188,6 +265,7 @@
                               <th>InvoiceId</th>
                               <th>Description</th>
                               <th>Status / Ticket</th>
+                              <th>History</th>
                               <th>Edit</th>
                               <th>Action</th>
 
@@ -218,30 +296,68 @@
 
         <script type="text/javascript">
           $(document).on("click", ".bbt", function () {
-            var Id = $(this).data('id');
-            var brandName = $(this).data('name');
-            var pid = $(this).data('pid');
+            const Id = $(this).data('id');
+            const brandName = $(this).data('name');
+            const pid = $(this).data('pid');
             document.getElementById('pid').innerHTML = pid;
             document.getElementById('pbd').innerHTML = brandName;
             $("#product_id").val(Id);
-            $("#product_name").val(brandName);
           });
+
+          /**
+           *action selection
+           **/
 
           $(document).on("click", ".rbtn", function () {
             const selectedBtn = $(this).val();
-            if(selectedBtn == "assign"){
+            if (selectedBtn == "assign") {
               document.getElementById('ticket').classList.remove("d-none");
             }
-            else if (selectedBtn == "repair"){
+            else if (selectedBtn == "repair") {
               document.getElementById('ticket').classList.add("d-none");
 
             }
-            else{
+            else {
               document.getElementById('ticket').classList.add("d-none");
             }
 
           });
+
+          /**
+           *product log
+           **/
+          $(document).on("click", "#log", function () {
+            const Id = $(this).data('id');
+            const brandName = $(this).data('name');
+            const pid = $(this).data('pid');
+            document.getElementById('productID').innerHTML = pid;
+            document.getElementById('productBrand').innerHTML = brandName;
+            $("#inputPID").val(Id);
+
+            const myNode = document.getElementById("result");
+            while (myNode.firstChild) {
+              myNode.removeChild(myNode.lastChild);
+            };
+
+            fetch(`/transaction/${Id}`)
+              .then(response => response.json())
+              .then(data => {
+                if (data.length > 0) {
+                  $.each(data, function (index, value) {
+                    if (value.status === "1") {
+                      $("#result").append('<li class="ps-2 text-danger">' + value.ticketNumber + '</li>');
+                    } else {
+                      $("#result").append('<li class="ps-2">' + value.ticketNumber + '</li>');
+                    }
+                  });
+                } else {
+                  $("#result").append('<li class="ps-2">' + 'No History Found.' + '</li>');
+                }
+              });
+
+          });
         </script>
+
 </body>
 
 </html>

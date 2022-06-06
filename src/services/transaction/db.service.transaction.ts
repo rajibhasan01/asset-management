@@ -129,4 +129,28 @@ export class DbTransaction {
       }
     });
   }
+  /**
+   * GetTransactionByProductId
+   */
+   public GetTransactionByProductId(productId: string) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const dbConn = await this.getDbConnection();
+        const db = dbConn.db(config.mongo.dbName);
+        const dbCollection = db.collection(this.collectionName);
+        const result = await dbCollection.find({productId}).toArray();
+        if (result) {
+          resolve(result);
+        } else {
+          reject("could not find any transaction of this id");
+        }
+      } catch (error) {
+        console.log(
+          "Error in GetTransactionById method of DbTransaction: ",
+          error
+        );
+        reject("Error in GetTransactionById methos of DbTransaction: ");
+      }
+    });
+  }
 }
