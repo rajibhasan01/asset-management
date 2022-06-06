@@ -25,7 +25,6 @@ transactionRoute.get("/", (req, res) => {
 transactionRoute.post("/add-transaction", async (req, res) => {
   try {
     let result: any = "hello";
-    console.log(req.body);
 
     if (req.body.action === "assign" && req.body.ticketNumber !== "") {
       const product: any = await productService.GetProductById(
