@@ -130,4 +130,25 @@ export class DbProduct {
       }
     });
   }
+  /**
+   * Categories by asset name
+   */
+   public GetCategoryWiseData() {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const dbConn = await this.getDbConnection();
+        const db = dbConn.db(config.mongo.dbName);
+        const dbCollection = db.collection(this.collectionName);
+        dbCollection.aggregate([{$match:{}},{$group:{_id:"$assetId",total:{$sum:"$quantity"}}}]).toArray((err, result) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(result);
+          }
+        });
+      } catch (error) {
+        console.log('error getting the asset type');
+      }
+    });
+  }
 }

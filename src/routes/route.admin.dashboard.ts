@@ -49,8 +49,21 @@ const checkAuth = (req:any,res:any,next:any) =>{
 
 
 // DashBoard API
-adminDashboardRouter.get('/', checkAuth, (req, res, next) => {
-  res.render('pages/index.ejs');
+adminDashboardRouter.get('/', checkAuth, async(req, res, next) => {
+  const products:any = await productService.GetCategoryWiseData();
+  const assets:any = await assetService.GetAssetList();
+
+  products?.map((product:any)=>{
+    for (const asset of assets){
+      if (product._id === asset._id.toString()){
+        product.name=asset.name;
+        break;
+      }
+    }
+  });
+  console.log(products);
+
+  res.render('pages/index.ejs', {products});
 });
 
 

@@ -63,4 +63,15 @@ export class ProductService implements ProductInterface {
         .catch((err) => reject(err));
     });
   }
+  public GetCategoryWiseData() {
+    return new Promise(async (resolve, reject) => {
+      await dbProduct
+        .GetCategoryWiseData()
+        .then((result) => {
+          resolve(result);
+        })
+        .catch((err) => reject(err));
+    });
+
+}
 }
