@@ -98,7 +98,7 @@
                   <div class="card-header card-no-border">
                     <div class="media media-dashboard">
                       <div class="media-body">
-                        <h5 class="mb-0">Ongoing Projects</h5>
+                        <h5 class="mb-0">Asset Details</h5>
                       </div>
                       <div class="icon-box onhover-dropdown">
                         <i data-feather="more-horizontal"></i>
@@ -119,12 +119,14 @@
                         <thead>
                           <tr>
                             <th><span>Name </span></th>
-                            <th><span>Date</span></th>
-                            <th><span>Project </span></th>
-                            <th><span>Status </span></th>
+                            <th><span>Avaiable</span></th>
+                            <th><span>Assigned </span></th>
+                            <th><span>Repair </span></th>
+                            <th><span>Total </span></th>
                           </tr>
                         </thead>
                         <tbody>
+                          <% if(typeof products !=='undefined' ){ products.map((data)=> { %>
                           <tr>
                             <td>
                               <div class="media">
@@ -138,7 +140,7 @@
                                 <div class="media-body ps-2">
                                   <div class="avatar-details">
                                     <a href="product-page.html">
-                                      <h6>Gary</h6></a
+                                      <h6> <%=data.name%></h6></a
                                     ><span> UK Desig Team</span>
                                   </div>
                                 </div>
@@ -146,115 +148,19 @@
                             </td>
                             <td class="img-content-box">
                               <h6>12 May 2020</h6>
-                              <span>In 6 Days</span>
                             </td>
                             <td>
                               <h6>Product Design</h6>
-                              <span>$7,800</span>
-                            </td>
-                            <td>
-                              <div class="badge badge-light-primary">Done</div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="media">
-                                <div class="square-box me-2">
-                                  <img
-                                    class="img-fluid b-r-5"
-                                    src="/assets/images/avtar/girl.png"
-                                    alt=""
-                                  />
-                                </div>
-                                <div class="media-body ps-2">
-                                  <div class="avatar-details">
-                                    <a href="product-page.html">
-                                      <h6>Ralph Waters</h6></a
-                                    ><span> UX Ninjas</span>
-                                  </div>
-                                </div>
-                              </div>
-                            </td>
-                            <td class="img-content-box">
-                              <h6>06 May 2020</h6>
-                              <span>Overdue</span>
-                            </td>
-                            <td>
-                              <h6>Concept Design</h6>
-                              <span>$670</span>
-                            </td>
-                            <td>
-                              <div class="badge badge-light-secondary">
-                                Pending
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="media">
-                                <div class="square-box me-2">
-                                  <img
-                                    class="img-fluid b-r-5"
-                                    src="/assets/images/avtar/man.png"
-                                    alt=""
-                                  />
-                                </div>
-                                <div class="media-body ps-2">
-                                  <div class="avatar-details">
-                                    <a href="product-page.html">
-                                      <h6>Edwin Day</h6></a
-                                    ><span> SF Dev Team</span>
-                                  </div>
-                                </div>
-                              </div>
-                            </td>
-                            <td class="img-content-box">
-                              <h6>28 Sep 2020</h6>
-                              <span>in 4 Months</span>
-                            </td>
-                            <td>
-                              <h6>UX Consulting</h6>
-                              <span>$7,889</span>
-                            </td>
-                            <td>
-                              <div class="badge badge-light-danger">
-                                Rejected
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="media">
-                                <div class="square-box me-2">
-                                  <img
-                                    class="img-fluid b-r-5"
-                                    src="/assets/images/avtar/woman.png"
-                                    alt=""
-                                  />
-                                </div>
-                                <div class="media-body ps-2">
-                                  <div class="avatar-details">
-                                    <a href="product-page.html">
-                                      <h6>Gary</h6></a
-                                    ><span> UK Desig Team</span>
-                                  </div>
-                                </div>
-                              </div>
-                            </td>
-                            <td class="img-content-box">
-                              <h6>12 May 2020</h6>
-                              <span>In 6 Days</span>
                             </td>
                             <td>
                               <h6>Product Design</h6>
-                              <span>Toyota</span>
                             </td>
                             <td>
-                              <div class="badge badge-light-info">
-                                In Progress
-                              </div>
+                              <div class="badge badge-light-primary"> <%=data.total%></div>
                             </td>
                           </tr>
+                          <% }) } %>
+
                         </tbody>
                       </table>
                     </div>
