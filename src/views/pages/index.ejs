@@ -141,19 +141,19 @@
                                   <div class="avatar-details">
                                     <a href="product-page.html">
                                       <h6> <%=data.name%></h6></a
-                                    ><span> UK Desig Team</span>
+                                    ><span> <%= data.assetType%></span>
                                   </div>
                                 </div>
                               </div>
                             </td>
-                            <td class="img-content-box">
-                              <h6>12 May 2020</h6>
+                            <td>
+                              <h6><%= data.available === 0 ? 'N/A' : data.available %></h6>
                             </td>
                             <td>
-                              <h6>Product Design</h6>
+                              <h6><%= data.assign === 0 ? 'N/A' : data.repair %></h6>
                             </td>
                             <td>
-                              <h6>Product Design</h6>
+                              <h6><%= data.repair === 0 ? 'N/A' : data.repair %></h6>
                             </td>
                             <td>
                               <div class="badge badge-light-primary"> <%=data.total%></div>
