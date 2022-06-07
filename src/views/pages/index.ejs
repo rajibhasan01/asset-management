@@ -133,7 +133,17 @@
                                 <div class="square-box me-2">
                                   <img
                                     class="img-fluid b-r-5"
-                                    src="/assets/images/avtar/boy.png"
+                                    <% if(data.name.toLowerCase()==="laptop"){%>
+                                      src="/assets/images/avtar/laptop.png"
+                                      <% } else if (data.name.toLowerCase()==="keyboard"){%>
+                                        src="/assets/images/avtar/keyboard.png"
+                                        <% } else if (data.name.toLowerCase()==="mouse"){%>
+                                          src="/assets/images/avtar/mouse.png"
+                                          <% } else if (data.name.toLowerCase()==="monitor"){%>
+                                            src="/assets/images/avtar/monitor.png"
+                                            <% } else {%>
+                                              src="/assets/images/avtar/unknown.png"
+                                   <% } %>
                                     alt=""
                                   />
                                 </div>

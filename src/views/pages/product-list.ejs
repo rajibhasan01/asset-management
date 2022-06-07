@@ -122,15 +122,15 @@
                                   <!-- Action Button -->
                                   <td>
                                     <% if (data.status.toLowerCase()==="available" ) { %>
-                                      <button type="button" class="btn bg-primary bbt" data-bs-toggle="modal"
+                                      <button type="button" class="btn bg-primary text-white bbt" data-bs-toggle="modal"
                                         data-bs-target="#exampleModal" data-name="<%= data.brand%>"
                                         data-pid="<%= data.pid%>" data-id="<%= data._id %>">Available</button>
                                       <%} else if(data.status.toLowerCase()==="assign" ) { %>
-                                        <button type="button" class="btn bg-success bbt" data-bs-toggle="modal"
+                                        <button type="button" class="btn bg-success text-white bbt" data-bs-toggle="modal"
                                           data-bs-target="#exampleModal" data-name="<%= data.brand%>"
                                           data-pid="<%= data.pid%>" data-id="<%= data._id %>">Re-assign </button>
                                         <%} else if(data.status.toLowerCase()==="repair" ) { %>
-                                          <button type="button" class="btn bg-info bbt" data-bs-toggle="modal"
+                                          <button type="button" class="btn bg-info text-white bbt" data-bs-toggle="modal"
                                             data-bs-target="#exampleModal" data-name="<%= data.brand%>"
                                             data-pid="<%= data.pid%>" data-id="<%= data._id %>">Reparing</button>
                                           <% } %>
