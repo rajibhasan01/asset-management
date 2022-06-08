@@ -1,6 +1,7 @@
 import { Product } from './../../models/model.product';
 import { MongoClient, ObjectId } from 'mongodb';
 import { ConfigService } from './../utility/configService';
+import { uid } from '../utility/functions';
 const config = ConfigService.getInstance().getConfig();
 export class DbProduct {
   private collectionName: string;
@@ -31,7 +32,15 @@ export class DbProduct {
         const dbConn = await this.getDbConnection();
         const db = dbConn.db(config.mongo.dbName);
         const dbCollection = db.collection(this.collectionName);
-        const result = await dbCollection.insertOne(productData);
+        // for individual product entry
+        let result;
+        const total = productData.quantity;
+        for (let i=0; i<total; i++){
+          productData.quantity = 1;
+          productData.pid = uid();
+          result = await dbCollection.insertOne(productData);
+          delete productData?._id;
+        }
         await dbConn.close();
         if (result) {
           resolve('success');
@@ -39,7 +48,7 @@ export class DbProduct {
           reject('failed');
         }
       } catch (error) {
-        console.log('Error in CreateProduct method of DbProduct: ', error);
+        // console.log('Error in CreateProduct method of DbProduct: ', error);
       }
     });
   }
@@ -74,11 +83,13 @@ export class DbProduct {
           { _id: new ObjectId(productId) },
           {
             $set: {
+              pid: product.pid,
               assetId: product.assetId,
               brand: product.brand,
               invoiceNumber: product.invoiceNumber,
               description: product.description,
               quantity: product.quantity,
+              status: product.status
             },
           }
         );
@@ -116,6 +127,27 @@ export class DbProduct {
         }
       } catch (error) {
         console.log('Error in GetProductById method of DbProduct: ', error);
+      }
+    });
+  }
+  /**
+   * Categories by asset name
+   */
+   public GetCategoryWiseData() {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const dbConn = await this.getDbConnection();
+        const db = dbConn.db(config.mongo.dbName);
+        const dbCollection = db.collection(this.collectionName);
+        dbCollection.aggregate([{$match:{}},{$group:{_id:"$assetId",total:{$sum:"$quantity"}}}]).toArray((err, result) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(result);
+          }
+        });
+      } catch (error) {
+        console.log('error getting the asset type');
       }
     });
   }

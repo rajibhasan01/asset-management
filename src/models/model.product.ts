@@ -4,6 +4,9 @@ export class Product {
   invoiceNumber?: string;
   description?: string;
   quantity?: number;
+  _id?:any;
+  pid?:any;
+  status?:any;
 
   private static product: Product;
   private constructor() {}

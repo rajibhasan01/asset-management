@@ -1,10 +1,12 @@
 <html>
-  <head>
-    <%- include('../partials/head.ejs') %>
-  </head>
-  <body>
-    <!-- Loader starts-->
-    <%- include('../partials/loader.ejs') %>
+
+<head>
+  <%- include('../partials/head.ejs') %>
+</head>
+
+<body>
+  <!-- Loader starts-->
+  <%- include('../partials/loader.ejs') %>
     <!-- Loader ends-->
     <!-- tap on top starts-->
     <div class="tap-top"><i data-feather="chevrons-up"></i></div>
@@ -13,103 +15,349 @@
     <div class="page-wrapper compact-wrapper" id="pageWrapper">
       <!-- Page Header Start-->
       <%- include('../partials/pageHeader.ejs') %>
-      <!-- Page Header Ends                              -->
-      <!-- Page Body Start-->
-      <div class="page-body-wrapper">
-        <!-- Page Sidebar Start-->
-        <%- include('../partials/sideNav.ejs') %>
-        <!-- Page Sidebar Ends-->
-        <div class="page-body">
-          <div class="container-fluid">
-            <div class="page-title">
-              <div class="row">
-                <div class="col-12 col-sm-6">
-                  <h3>Asset List</h3>
-                </div>
-                <div class="col-12 col-sm-6">
-                  <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                      <a href="index.html"> <i data-feather="home"></i></a>
-                    </li>
-                    <li class="breadcrumb-item">Product</li>
-                    <li class="breadcrumb-item active">Product List</li>
-                  </ol>
+        <!-- Page Header Ends                              -->
+        <!-- Page Body Start-->
+        <div class="page-body-wrapper">
+          <!-- Page Sidebar Start-->
+          <%- include('../partials/sideNav.ejs') %>
+            <!-- Page Sidebar Ends-->
+            <div class="page-body">
+              <div class="container-fluid">
+                <div class="page-title">
+                  <div class="row">
+                    <div class="col-12 col-sm-6">
+                      <h3>Product</h3>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                      <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                          <a href="index.html"> <i data-feather="home"></i></a>
+                        </li>
+                        <li class="breadcrumb-item">Product</li>
+                        <li class="breadcrumb-item active">Product List</li>
+                      </ol>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <!-- Container-fluid starts-->
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-sm-12">
-                <div class="card">
-                  <div class="card-header pb-0">
-                    <% if(typeof message !== 'undefined'){ %>
-                      <div
-                        class="alert alert-success alert-dismissible fade show"
-                        role="alert"
-                      >
-                        <strong><%= message %></strong>
-                        <button
-                          type="button"
-                          class="btn-close"
-                          data-bs-dismiss="alert"
-                          aria-label="Close"
-                        ></button>
-                      </div>
-                      <% } %>
-                    <h5 class="mb-3">Product List</h5>
-                    
-                  </div>
-                  <div class="card-body">
-                    <div class="table-responsive">
-                      <table class="display" id="advance-1">
-                        <thead>
-                          <tr>
-                            <th>Brand</th>
-                            <th>Quantity</th>
-                            <th>InvoiceId</th>
-                            <th>Description</th>
-                            <th>Edit</th>
-                          </tr>
-                          </thead>
-                          <tbody>
-                          <% if(typeof products !== 'undefined'){
-                            products.map((data) => { %>
-                            <tr>
-                              <td><%=data.brand%></td>
-                              <td><%=data.quantity%></td>
-                              <td><%=data.invoiceNumber%></td>
-                              <td><%=data.description%></td>
-                              <td><a href="/edit-product/<%=data._id%>">Edit</a></td>
-                            </tr>
-                            <% }) } %>
-                        </tbody>
-                          <tr>
-                            <th>Brand</th>
-                            <th>Quantity</th>
-                            <th>InvoiceId</th>
-                            <th>Description</th>
-                            <th>Edit</th>
+              <!-- Container-fluid starts-->
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="card">
+                      <div class="card-header pb-0">
+                        <% if(typeof message !=='undefined' ){ %>
+                          <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>
+                              <%= message %>
+                            </strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                          </div>
+                          <% } %>
+                            <h5 class="mb-3">Product List</h5>
 
-                          </tr>
-                        </tfoot>
-                      </table>
+                      </div>
+                      <div class="card-body">
+                        <div class="table-responsive">
+                          <table class="display" id="advance-1">
+                            <thead>
+                              <tr>
+                                <th>Brand</th>
+                                <th>ProductID</th>
+                                <th>Quantity</th>
+                                <th>InvoiceId</th>
+                                <th>Description</th>
+                                <th>Status / Ticket</th>
+                                <th>History</th>
+                                <th>Edit</th>
+                                <th>Action</th>
+
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <% if(typeof products !=='undefined' ){ products.map((data)=> { %>
+                                <tr>
+                                  <!-- Product Brand -->
+                                  <td>
+                                    <%=data.brand%>
+                                  </td>
+                                  <!-- Product Id -->
+                                  <td>
+                                    <%=data.pid%>
+                                  </td>
+                                  <!-- Quantity -->
+                                  <td>
+                                    <%=data.quantity%>
+                                  </td>
+                                  <!-- Invoice Number -->
+                                  <td>
+                                    <%=data.invoiceNumber%>
+                                  </td>
+                                  <!-- Description -->
+                                  <td>
+                                    <%=data.description%>
+                                  </td>
+                                  <!-- Status / Ticket -->
+                                  <td>
+                                    <% if (data.ticket && data.status.toLowerCase()==="assign" ) { %>
+                                      <p class="text-success">
+                                        <%= data.ticket %>
+                                      </p>
+                                      <%} else if(data.status.toLowerCase()==="available" ) { %>
+                                        <p class="text-primary">AVAILABLE</p>
+                                        <%} else if(data.status.toLowerCase()==="repair" ) { %>
+                                          <p class="text-info">REPAIRING</p>
+                                          <% } %>
+                                  </td>
+                                  <!-- Log Button -->
+                                  <td>
+                                    <a id="log" data-bs-toggle="modal" data-bs-target="#logModal"
+                                      data-name="<%= data.brand%>" data-pid="<%= data.pid%>" data-id="<%= data._id %>"
+                                      href="#">Log</a>
+                                  </td>
+
+                                  <!-- Edit Button -->
+                                  <td><a href="/edit-product/<%=data._id%>">Edit</a></td>
+
+                                  <!-- Action Button -->
+                                  <td>
+                                    <% if (data.status.toLowerCase()==="available" ) { %>
+                                      <button type="button" class="btn bg-primary text-white bbt" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal" data-name="<%= data.brand%>"
+                                        data-pid="<%= data.pid%>" data-id="<%= data._id %>">Available</button>
+                                      <%} else if(data.status.toLowerCase()==="assign" ) { %>
+                                        <button type="button" class="btn bg-success text-white bbt" data-bs-toggle="modal"
+                                          data-bs-target="#exampleModal" data-name="<%= data.brand%>"
+                                          data-pid="<%= data.pid%>" data-id="<%= data._id %>">Re-assign </button>
+                                        <%} else if(data.status.toLowerCase()==="repair" ) { %>
+                                          <button type="button" class="btn bg-info text-white bbt" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal" data-name="<%= data.brand%>"
+                                            data-pid="<%= data.pid%>" data-id="<%= data._id %>">Reparing</button>
+                                          <% } %>
+                                  </td>
+
+                                  <!-- Modal For Action-->
+                                  <div class="modal fade" id="exampleModal" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h4 class="card-title mb-0">Add Ticket Number</h4>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                        </div>
+
+                                        <form class="card" method="post" action="/transaction/add-transaction">
+                                          <div class="modal-body">
+                                            <div class="card-body">
+                                              <div class="row">
+                                                <div class="col-md-12">
+                                                  <div class="mb-3">
+                                                    <label class="form-label">Product ID : <span id="pid"
+                                                        class="text-dark"></span> <input hidden type="text"
+                                                        class="border-0" id="product_id" name="productId"
+                                                        value=""></label>
+                                                    <br>
+                                                    <label class="form-label">Product Brand : <span id="pbd"
+                                                        class="text-dark"></span></label>
+                                                  </div>
+                                                </div>
+                                                <div class="col-md-12" id="ticket">
+                                                  <div class="mb-3">
+                                                    <label class="form-label">Ticket Number</label>
+                                                    <input class="form-control" type="text"
+                                                      placeholder="ticket number (xxxxxxxxxxxxx)" name="ticketNumber"
+                                                      value="" />
+                                                  </div>
+                                                </div>
+
+                                                <input hidden class="form-control" type="text" name="status"
+                                                  value="1" />
+
+                                                <!-- Radio Button -->
+                                                <div class="d-flex">
+                                                  <div class="form-check form-check-inline">
+                                                    <input class="form-check-input rbtn" type="radio" name="action"
+                                                      id="assign" value="assign" checked="checked">
+                                                    <label class="form-check-label text-success"
+                                                      for="inlineRadio1">Assign</label>
+                                                  </div>
+                                                  <div class="form-check form-check-inline">
+                                                    <input class="form-check-input rbtn" type="radio" name="action"
+                                                      id="repair" value="repair">
+                                                    <label class="form-check-label text-info"
+                                                      for="inlineRadio2">Repair</label>
+                                                  </div>
+                                                  <div class="form-check form-check-inline">
+                                                    <input class="form-check-input rbtn" type="radio" name="action"
+                                                      id="availabe" value="available">
+                                                    <label class="form-check-label text-primary" for="inlineRadio3">In
+                                                      store</label>
+                                                  </div>
+                                                </div>
+
+                                                <!-- Container-fluid Ends-->
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                              data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                          </div>
+                                        </form>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <!-- Modal For Log-->
+                                  <div class="modal fade" id="logModal" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h4 class="card-title mb-0">Product Log</h4>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                        </div>
+
+                                        <form class="card" method="post" action="/transaction/add-transaction">
+                                          <div class="modal-body">
+                                            <div class="card-body">
+                                              <div class="row">
+                                                <div class="col-md-12">
+                                                  <div class="mb-3">
+                                                    <label class="form-label">Product ID : <span id="productID"
+                                                        class="text-dark"></span> <input hidden type="text"
+                                                        class="border-0" id="inputPID" name="productId"
+                                                        value=""></label>
+                                                    <br>
+                                                    <label class="form-label">Product Brand : <span id="productBrand"
+                                                        class="text-dark"></span></label>
+                                                  </div>
+                                                  <div class="">
+                                                    <label>Previous Ticket Number</label>
+                                                    <br>
+                                                    <ul id="result" class="list-bullets"></ul>
+                                                  </div>
+                                                </div>
+                                                <!-- Container-fluid Ends-->
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                              data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                          </div>
+                                        </form>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                </tr>
+                                <% }) } %>
+                            </tbody>
+                            <tr>
+                              <th>Brand</th>
+                              <th>ProductID</th>
+                              <th>Quantity</th>
+                              <th>InvoiceId</th>
+                              <th>Description</th>
+                              <th>Status / Ticket</th>
+                              <th>History</th>
+                              <th>Edit</th>
+                              <th>Action</th>
+
+                            </tr>
+                            </tfoot>
+                          </table>
+
+                        </div>
+                      </div>
+
                     </div>
                   </div>
                 </div>
               </div>
               <!-- DOM / jQuery  Ends-->
 
+
               <!-- Column rendering Ends-->
             </div>
-          </div>
-          <!-- Container-fluid Ends-->
         </div>
-        <!-- footer start-->
-        <%- include('../partials/footer.ejs') %>
-      </div>
+        <!-- Container-fluid Ends-->
     </div>
-    <%- include('../partials/jsLibrary.ejs') %>
-  </body>
+    <!-- footer start-->
+    <%- include('../partials/footer.ejs') %>
+      </div>
+      </div>
+      <%- include('../partials/jsLibrary.ejs') %>
+
+        <script type="text/javascript">
+          $(document).on("click", ".bbt", function () {
+            const Id = $(this).data('id');
+            const brandName = $(this).data('name');
+            const pid = $(this).data('pid');
+            document.getElementById('pid').innerHTML = pid;
+            document.getElementById('pbd').innerHTML = brandName;
+            $("#product_id").val(Id);
+          });
+
+          /**
+           *action selection
+           **/
+
+          $(document).on("click", ".rbtn", function () {
+            const selectedBtn = $(this).val();
+            if (selectedBtn == "assign") {
+              document.getElementById('ticket').classList.remove("d-none");
+            }
+            else if (selectedBtn == "repair") {
+              document.getElementById('ticket').classList.add("d-none");
+
+            }
+            else {
+              document.getElementById('ticket').classList.add("d-none");
+            }
+
+          });
+
+          /**
+           *product log
+           **/
+          $(document).on("click", "#log", function () {
+            const Id = $(this).data('id');
+            const brandName = $(this).data('name');
+            const pid = $(this).data('pid');
+            document.getElementById('productID').innerHTML = pid;
+            document.getElementById('productBrand').innerHTML = brandName;
+            $("#inputPID").val(Id);
+
+            const myNode = document.getElementById("result");
+            while (myNode.firstChild) {
+              myNode.removeChild(myNode.lastChild);
+            };
+
+            fetch(`/transaction/${Id}`)
+              .then(response => response.json())
+              .then(data => {
+                if (data.length > 0) {
+                  $.each(data, function (index, value) {
+                    if (value.status === "1") {
+                      $("#result").append('<li class="ps-2 text-danger">' + value.ticketNumber + '</li>');
+                    } else {
+                      $("#result").append('<li class="ps-2">' + value.ticketNumber + '</li>');
+                    }
+                  });
+                } else {
+                  $("#result").append('<li class="ps-2">' + 'No History Found.' + '</li>');
+                }
+              });
+
+          });
+        </script>
+
+</body>
+
 </html>

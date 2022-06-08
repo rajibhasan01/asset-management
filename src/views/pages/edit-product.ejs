@@ -85,7 +85,7 @@
                             >
                               <option value="0">--Select--</option>
                               <% if(typeof assetType !== 'undefined'){
-                              assetType.map((data) => { 
+                              assetType.map((data) => {
                                 let id = ''+data._id;
                                   let selected = '';
                                   if (id === productResult.assetId) {
@@ -121,6 +121,7 @@
                               name="invoiceNumber"
                               value="<%= productResult.invoiceNumber %>"
                             />
+                            <a class="ms-1 mt-1" href="/invoice" target="_blank"> * view invoice list</a>
                           </div>
                         </div>
                         <div class="col-md-12">
@@ -146,11 +147,25 @@
                             ><%= productResult.description %></textarea>
                           </div>
                         </div>
+                        <input
+                              class="form-control"
+                              type="number"
+                              name="pid"
+                              hidden
+                              value="<%= productResult.pid %>"
+                            />
+                            <input
+                              class="form-control"
+                              type="text"
+                              name="status"
+                              hidden
+                              value="<%= productResult.status %>"
+                            />
                       </div>
                     </div>
                     <div class="card-footer text-end">
                       <button class="btn btn-primary" type="submit">
-                        Add Type
+                        Submit
                       </button>
                     </div>
                   </form>

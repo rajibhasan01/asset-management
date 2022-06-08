@@ -89,7 +89,7 @@ export class DbInvoice {
   public async EditInvoice(invoiceId: string, invoiceData: Invoice) {
     try {
       return await new Promise(async (resolve, reject) => {
-        const { imageName, imagePath, title, amount, cashType } = invoiceData;
+        const { imageName, imagePath, title, amount, cashType, invoiceNumber } = invoiceData;
         const dbConn = await this.getDbConnection();
         const db = dbConn.db(config.mongo.dbName);
         const dbCollection = db.collection(this.collectionName);
@@ -102,6 +102,7 @@ export class DbInvoice {
               cashType,
               title,
               amount,
+              invoiceNumber,
             },
           }
         );

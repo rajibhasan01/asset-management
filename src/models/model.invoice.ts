@@ -1,6 +1,7 @@
 class Invoice {
   title?: string;
   amount?: number;
+  invoiceNumber?: string;
   cashType?: string;
   imageName?: string;
   imagePath?: string;

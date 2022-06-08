@@ -82,8 +82,9 @@
                             <select
                               class="form-control btn-square"
                               name="assetType"
+                              required
                             >
-                              <option value="0">--Select--</option>
+                              <option value="">--Select--</option>
                               <% if(typeof assetType !== 'undefined'){
                               assetType.map((data) => { %>
                               <option value="<%= data._id %>">
@@ -101,6 +102,7 @@
                               type="text"
                               placeholder="name"
                               name="name"
+                              required
                             />
                           </div>
                         </div>

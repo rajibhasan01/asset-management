@@ -24,15 +24,15 @@
             <div class="page-title">
               <div class="row">
                 <div class="col-12 col-sm-6">
-                  <h3>Asset List</h3>
+                  <h3>Invoice</h3>
                 </div>
                 <div class="col-12 col-sm-6">
                   <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                       <a href="index.html"> <i data-feather="home"></i></a>
                     </li>
-                    <li class="breadcrumb-item">Asset</li>
-                    <li class="breadcrumb-item active">Asset List</li>
+                    <li class="breadcrumb-item">Invoice</li>
+                    <li class="breadcrumb-item active">Invoice List</li>
                   </ol>
                 </div>
               </div>
@@ -58,7 +58,7 @@
                       ></button>
                     </div>
                     <% } %>
-                    <h5 class="mb-3">Asset List</h5>
+                    <h5 class="mb-3">Invoice List</h5>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
@@ -66,6 +66,7 @@
                         <thead>
                           <tr>
                             <th>Title</th>
+                            <th>Invoice Number</th>
                             <th>Amount</th>
                             <th>CashType</th>
                             <th>Image</th>
@@ -77,6 +78,7 @@
                           invoiceData.map((data) => { %>
                           <tr>
                             <td><%=data.title%></td>
+                            <td><%=data.invoiceNumber%></td>
                             <td><%=data.amount%></td>
                             <td><%=data.cashType%></td>
                             <td><a href="<%=data.imagePath%>" target="_blank"><img style="max-width: 200px;" class="img-thumbnail" src="<%=data.imagePath%>" alt="<%=data.imageName%>"></a></td>
@@ -87,6 +89,7 @@
                         <tfoot>
                           <tr>
                             <th>Title</th>
+                            <th>Invoice Number</th>
                             <th>Amount</th>
                             <th>CashType</th>
                             <th>Image</th>

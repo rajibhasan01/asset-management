@@ -82,8 +82,9 @@
                             <select
                               class="form-control btn-square"
                               name="assetId"
+                              required
                             >
-                              <option value="0">--Select--</option>
+                              <option value="">--Select--</option>
                               <% if(typeof assets !== 'undefined'){
                               assets.map((data) => { %>
                               <option value="<%= data._id %>">
@@ -101,6 +102,7 @@
                               type="text"
                               placeholder="Brand"
                               name="brand"
+                              required
                             />
                           </div>
                         </div>
@@ -112,8 +114,11 @@
                               type="text"
                               placeholder="Invoice number"
                               name="invoiceNumber"
+                              required
                             />
+                            <a class="ms-1 mt-1" href="/invoice" target="_blank"> * view invoice list</a>
                           </div>
+
                         </div>
                         <div class="col-md-12">
                           <div class="mb-3">
@@ -123,6 +128,19 @@
                               type="number"
                               placeholder="Quantity"
                               name="quantity"
+                              required
+                            />
+                          </div>
+                          <div class="col-md-12">
+                          <div class="mb-3">
+                            <label class="form-label">Status</label>
+                            <input
+                              class="form-control"
+                              type="text"
+                              placeholder="status"
+                              name="status"
+                              value="Available"
+                              hidden
                             />
                           </div>
                         </div>
