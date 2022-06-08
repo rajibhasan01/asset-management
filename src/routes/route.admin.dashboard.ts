@@ -42,8 +42,8 @@ const checkAuth = (req: any, res: any, next: any) => {
   if (req.isAuthenticated()) {
     next();
   } else {
-    // res.redirect('/login');
-    next();
+    res.redirect('/login');
+    // next();
   }
 };
 
