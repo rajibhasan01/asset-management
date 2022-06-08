@@ -1,7 +1,7 @@
 export const configData = {
   mongo: {
-    url: 'mongodb://localhost:27017',
-    dbName: 'bc-asset-mgt',
+    url: `mongodb+srv://potteryStore:rfSf2bJAAdAUle7W@cluster0.nzlp2.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,
+    dbName: 'asset-mgt',
   },
   google: {
     clientId:

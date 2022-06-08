@@ -81,7 +81,9 @@
                             <td><%=data.invoiceNumber%></td>
                             <td><%=data.amount%></td>
                             <td><%=data.cashType%></td>
-                            <td><a href="<%=data.imagePath%>" target="_blank"><img style="max-width: 200px;" class="img-thumbnail" src="<%=data.imagePath%>" alt="<%=data.imageName%>"></a></td>
+                            <td>
+                              <img style="max-width: 200px;" class="img-thumbnail" src="data:image/jpeg;base64,<%- data.imgBuffer.toString('base64') %>"/>
+                              </td>
                             <td><a href="/invoice/edit/<%=data._id%>">Edit</a></td>
                           </tr>
                           <% }) } %>

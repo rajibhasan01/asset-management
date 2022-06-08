@@ -16,10 +16,11 @@ export const invoiceImage = (req: any, res: any, next: any) => {
     )}`;
 
     const fileContents = Buffer.from(image.buffer, 'base64');
-    fs.writeFile(`uploaded-image/${imagePath}`, fileContents, (err) => {
-      if (err) return console.error(err.message);
-    });
-    const newData = { ...req.body, imagePath, imageName: image.originalname };
+    // fs.writeFile(`uploaded-image/${imagePath}`, fileContents, (err) => {
+    //   if (err) return console.error(err.message);
+    // });
+    const imgBuffer = Buffer.from(image.buffer, 'base64');;
+    const newData = { ...req.body, imageName: image.originalname, imgBuffer };
     req.body = newData;
   }
   else{
