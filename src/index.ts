@@ -1,8 +1,9 @@
 import express from 'express';
 import path from 'path';
+import 'dotenv/config';
 import registeredRouters from './routes/register-routing-files';
 const app = express();
-const port = 3000; // default port to listen
+const port = process.env.PORT || 3000; // default port to listen
 import bodyParser from 'body-parser';
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
