@@ -8,7 +8,6 @@ import { ProductService } from "./../services/product/service.product";
 import { AssetTypeService } from "./../services/asset-type/service.asset-type";
 import transactionRoute from "./transaction/route.transaction";
 import { TransactionService } from "./../services/transaction/service.transaction";
-import { ObjectId } from "mongodb";
 
 dotenv.config();
 
@@ -17,6 +16,7 @@ const assetService = AssetService.getInstance();
 const productService = ProductService.getInstance();
 const assetTypeService = AssetTypeService.getInstance();
 const transactionService = TransactionService.getInstance();
+
 
 adminDashboardRouter.use(
   session({
@@ -83,7 +83,7 @@ adminDashboardRouter.get("/", checkAuth, async (req, res, next) => {
     product.repair = repair;
     product.assign = assign;
   });
-  res.render("pages/index.ejs", { products });
+  res.render("pages/index.ejs", { products});
 });
 
 // Add Asset Type Get API

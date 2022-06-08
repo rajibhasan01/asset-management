@@ -11,4 +11,5 @@ export const configData = {
     failUrl : "https://hidden-waters-59301.herokuapp.com/login",
     successUrl: "https://hidden-waters-59301.herokuapp.com"
   },
+  user: "admin"
 };
