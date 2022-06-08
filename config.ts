@@ -7,8 +7,8 @@ export const configData = {
     clientId:
       "104443873174-d492ffnchecain2qsvmkrjei3tldobf9.apps.googleusercontent.com",
     clientSecret: "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",
-    callbackURL: "https://hidden-waters-59301.herokuapp.com//login/auth/google/callback",
-    failUrl : "https://hidden-waters-59301.herokuapp.com//login",
+    callbackURL: "https://hidden-waters-59301.herokuapp.com/login/auth/google/callback",
+    failUrl : "https://hidden-waters-59301.herokuapp.com/login",
     successUrl: "https://hidden-waters-59301.herokuapp.com"
   },
 };

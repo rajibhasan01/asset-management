@@ -16,7 +16,7 @@ passport.use(
     },
 
     (request :any, accessToken:any, refreshToken:any, profile:any, done:any) => {
-        if (profile._json.email === "rajib.hasan@braincraftapps.com") {
+        if (profile) {
           return done(null, profile);
         } else {
           return done(null);
