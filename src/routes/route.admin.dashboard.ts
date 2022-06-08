@@ -48,7 +48,7 @@ const checkAuth = (req: any, res: any, next: any) => {
 };
 
 // DashBoard API
-adminDashboardRouter.get("/", checkAuth, async (req, res, next) => {
+adminDashboardRouter.get("/", async (req, res, next) => {
   const products: any = await productService.GetCategoryWiseData();
   const assets: any = await assetService.GetAssetList();
   const productResult: any = await productService.GetProductList();
@@ -87,14 +87,14 @@ adminDashboardRouter.get("/", checkAuth, async (req, res, next) => {
 });
 
 // Add Asset Type Get API
-adminDashboardRouter.get("/add-asset-type", checkAuth, (req, res, next) => {
+adminDashboardRouter.get("/add-asset-type", (req, res, next) => {
   res.render("pages/add-asset-type.ejs");
 });
 
 // Edit Asset Type Get API
 adminDashboardRouter.get(
   "/edit-asset-type/:id",
-  checkAuth,
+
   async (req, res, next) => {
     const assetTypeId = req.params.id;
     const assetTypeResult = await assetTypeService.GetAssetTypeById(
@@ -107,7 +107,7 @@ adminDashboardRouter.get(
 // Add Asset Type Post API
 adminDashboardRouter.post(
   "/add-asset-type",
-  checkAuth,
+
   async (req, res, next) => {
     try {
       const result = await assetTypeService.AddAssetType(req.body);
@@ -129,7 +129,7 @@ adminDashboardRouter.post(
 // Edit Asset Type Post API
 adminDashboardRouter.post(
   "/edit-asset-type/:id",
-  checkAuth,
+
   async (req, res, next) => {
     try {
       const assetTypeId = req.params.id;
@@ -163,7 +163,6 @@ adminDashboardRouter.post(
 // Asset Type List Get API
 adminDashboardRouter.get(
   "/asset-type-list",
-  checkAuth,
   async (req, res, next) => {
     const result = await assetTypeService.GetAssetTypeList();
     if (result) {
@@ -175,7 +174,7 @@ adminDashboardRouter.get(
 );
 
 // Add Asset Get API
-adminDashboardRouter.get("/add-asset", checkAuth, async (req, res, next) => {
+adminDashboardRouter.get("/add-asset",  async (req, res, next) => {
   const result = await assetTypeService.GetAssetTypeList();
   if (result) {
     res.render("pages/add-asset.ejs", { assetType: result });
@@ -185,7 +184,7 @@ adminDashboardRouter.get("/add-asset", checkAuth, async (req, res, next) => {
 });
 
 // Add Asset Post API
-adminDashboardRouter.post("/add-asset", checkAuth, async (req, res, next) => {
+adminDashboardRouter.post("/add-asset",  async (req, res, next) => {
   try {
     const result = await assetService.AddAsset(req.body);
     const assets = await assetService.GetAssetList();
@@ -203,7 +202,7 @@ adminDashboardRouter.post("/add-asset", checkAuth, async (req, res, next) => {
 });
 
 // Asset List Get API
-adminDashboardRouter.get("/asset-list", checkAuth, async (req, res, next) => {
+adminDashboardRouter.get("/asset-list", async (req, res, next) => {
   try {
     const assets = await assetService.GetAssetList();
     if (assets) {
@@ -219,7 +218,6 @@ adminDashboardRouter.get("/asset-list", checkAuth, async (req, res, next) => {
 // Edit Asset Get API
 adminDashboardRouter.get(
   "/edit-asset/:id",
-  checkAuth,
   async (req, res, next) => {
     const assetId = req.params.id;
     const assetResult = await assetService.GetAssetById(assetId);
@@ -231,7 +229,6 @@ adminDashboardRouter.get(
 // Edit Asset Post API
 adminDashboardRouter.post(
   "/edit-asset/:id",
-  checkAuth,
   async (req, res, next) => {
     try {
       const assetId = req.params.id;
@@ -258,7 +255,7 @@ adminDashboardRouter.post(
 );
 
 // Add Product Get API
-adminDashboardRouter.get("/add-product", checkAuth, async (req, res, next) => {
+adminDashboardRouter.get("/add-product",  async (req, res, next) => {
   const assets = await assetService.GetAssetList();
   if (assets) {
     res.render("pages/add-product.ejs", { assets });
@@ -268,7 +265,7 @@ adminDashboardRouter.get("/add-product", checkAuth, async (req, res, next) => {
 });
 
 // Add Product Post API
-adminDashboardRouter.post("/add-product", checkAuth, async (req, res, next) => {
+adminDashboardRouter.post("/add-product",  async (req, res, next) => {
   try {
     const result = await productService.AddProduct(req.body);
     const products = await productService.GetProductList();
@@ -283,7 +280,7 @@ adminDashboardRouter.post("/add-product", checkAuth, async (req, res, next) => {
 });
 
 // Product List Get API
-adminDashboardRouter.get("/product-list", checkAuth, async (req, res, next) => {
+adminDashboardRouter.get("/product-list",  async (req, res, next) => {
   const transit: any = await transactionService.GetTransaction();
   const products: any = await productService.GetProductList();
   // ticketNumber adjust with product
@@ -312,7 +309,6 @@ adminDashboardRouter.get("/product-list", checkAuth, async (req, res, next) => {
 // Edit Product Get API
 adminDashboardRouter.get(
   "/edit-product/:id",
-  checkAuth,
   async (req, res, next) => {
     const productId = req.params.id;
     const assetType = await assetService.GetAssetList();
@@ -324,7 +320,6 @@ adminDashboardRouter.get(
 // Edit Product Post API
 adminDashboardRouter.post(
   "/edit-product/:id",
-  checkAuth,
   async (req, res, next) => {
     try {
       const productId = req.params.id;
@@ -373,7 +368,6 @@ adminDashboardRouter.post(
 // Session Logout
 adminDashboardRouter.get(
   "/logout",
-  checkAuth,
   (req: any, res: any, next: any) => {
     req.logout(req.user, (err: any) => {
       if (err) return next(err);
@@ -382,6 +376,6 @@ adminDashboardRouter.get(
   }
 );
 
-adminDashboardRouter.use("/invoice", checkAuth, invoiceRoute);
-adminDashboardRouter.use("/transaction", checkAuth, transactionRoute);
+adminDashboardRouter.use("/invoice", invoiceRoute);
+adminDashboardRouter.use("/transaction", transactionRoute);
 export = adminDashboardRouter;
