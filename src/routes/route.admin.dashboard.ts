@@ -48,7 +48,7 @@ const checkAuth = (req: any, res: any, next: any) => {
 };
 
 // DashBoard API
-adminDashboardRouter.get("/", checkAuth, async (req, res, next) => {
+adminDashboardRouter.get("/", checkAuth, async (req:any, res, next) => {
   const products: any = await productService.GetCategoryWiseData();
   const assets: any = await assetService.GetAssetList();
   const productResult: any = await productService.GetProductList();
@@ -83,7 +83,8 @@ adminDashboardRouter.get("/", checkAuth, async (req, res, next) => {
     product.repair = repair;
     product.assign = assign;
   });
-  res.render("pages/index.ejs", { products});
+  const userName = req?.user?.displayName;
+  res.render("pages/index.ejs", { products, userName });
 });
 
 // Add Asset Type Get API
