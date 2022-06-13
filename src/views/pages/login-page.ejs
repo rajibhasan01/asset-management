@@ -8,147 +8,26 @@
   <!-- Loader starts-->
   <%- include('../partials/loader.ejs') %>
     <!-- Loader ends-->
-    <!-- tap on top starts-->
-    <div class="tap-top"><i data-feather="chevrons-up"></i></div>
-    <!-- tap on tap ends-->
-    <!-- page-wrapper Start-->
-    <div class="page-wrapper compact-wrapper" id="pageWrapper">
-      <!-- Page Header Start-->
-      <%- include('../partials/pageHeader.ejs') %>
-        <!-- Page Header Ends                              -->
-        <!-- Page Body Start-->
-        <div class="page-body-wrapper">
-          <!-- Page Sidebar Start-->
-          <%- include('../partials/sideNav.ejs') %>
-            <!-- Page Sidebar Ends-->
-            <div class="page-body">
-              <div class="container-fluid">
-                <div class="page-title">
-                  <div class="row">
-                    <div class="col-12 col-sm-6">
-                      <div class="greeting-user">
-                        <h1>Hello, <%=userName%>
-                        </h1>
-                        <p>Welcome back, your dashboard is ready!</p>
-                      </div>
-                    </div>
-                    <div class="col-12 col-sm-6">
-                      <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                          <a class="home-item" href="index.html"><i data-feather="home"></i></a>
-                        </li>
-                        <li class="breadcrumb-item">Dashboard</li>
-                        <li class="breadcrumb-item active">Default</li>
-                      </ol>
-                    </div>
-                  </div>
-                </div>
+    <div class="container-fluid p-0">
+      <div class="row">
+        <div class="col-12">
+          <div class="login-card">
+            <form class="theme-form login-form">
+              <h4>Login</h4>
+              <h6>Welcome back! Log in to your account.</h6>
+              <div class="login-social-title text-center">
+                <h5>Sign in with</h5>
+                <a className="btn text-primary bg-info" href="/login/auth/google">
+                  <h5 class="bg-primary text-white p-2 rounded">Google login</h5>
+                </a>
               </div>
-              <!-- Container-fluid starts-->
-              <div class="container-fluid default-dash">
-                <div class="row">
-                  <div class="col-12">
-                    <div class="card ongoing-project">
-                      <div class="card-header card-no-border">
-                        <div class="media media-dashboard">
-                          <div class="media-body">
-                            <h5 class="mb-0">Dashboard</h5>
-                          </div>
-                          <div class="icon-box onhover-dropdown">
-                            <i data-feather="more-horizontal"></i>
-                            <div class="icon-box-show onhover-show-div">
-                              <ul>
-                                <li><a> Done</a></li>
-                                <li><a> Pending</a></li>
-                                <li><a> Rejected</a></li>
-                                <li><a>In Progress</a></li>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="card-body">
-                        <div class="table-responsive">
-                          <table class="border-0" id="advance-1">
-                            <thead>
-                              <tr>
-                                <th><span>Name </span></th>
-                                <th><span>Avaiable</span></th>
-                                <th><span>Assigned </span></th>
-                                <th><span>Repair </span></th>
-                                <th><span>Total </span></th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <% if(typeof products !=='undefined' ){ products.map((data)=> {%>
-                                <tr>
-                                  <td>
-                                    <div class="media">
-                                      <div class="square-box me-2">
-                                        <img class="img-fluid b-r-5" <% if(data.name.toLowerCase()==="laptop" ){%>
-                                        src="/assets/images/avtar/laptop.png"
-                                        <% } else if (data.name.toLowerCase()==="keyboard" ){%>
-                                          src="/assets/images/avtar/keyboard.png"
-                                          <% } else if (data.name.toLowerCase()==="mouse" ){%>
-                                            src="/assets/images/avtar/mouse.png"
-                                            <% } else if (data.name.toLowerCase()==="monitor" ){%>
-                                              src="/assets/images/avtar/monitor.png"
-                                              <% } else {%>
-                                                src="/assets/images/avtar/unknown.png"
-                                                <% } %>
-                                                  alt=""
-                                                  />
-                                      </div>
-                                      <div class="media-body ps-2">
-                                        <div class="avatar-details">
-                                          <a href="product-page.html">
-                                            <h6>
-                                              <%=data.name%>
-                                            </h6>
-                                          </a><span>
-                                            <%= data.assetType%>
-                                          </span>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </td>
-                                  <td>
-                                    <h6>
-                                      <%= data.available===0 ? 'N/A' : data.available %>
-                                    </h6>
-                                  </td>
-                                  <td>
-                                    <h6>
-                                      <%= data.assign===0 ? 'N/A' : data.assign %>
-                                    </h6>
-                                  </td>
-                                  <td>
-                                    <h6>
-                                      <%= data.repair===0 ? 'N/A' : data.repair %>
-                                    </h6>
-                                  </td>
-                                  <td>
-                                    <div class="badge badge-light-primary">
-                                      <%=data.total%>
-                                    </div>
-                                  </td>
-                                </tr>
-                                <% }) } %>
-
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- Container-fluid Ends-->
-            </div>
-            <!-- footer start-->
-            <%- include('../partials/footer.ejs') %>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
+    </div>
+
     <%- include('../partials/jsLibrary.ejs') %>
 </body>
 
